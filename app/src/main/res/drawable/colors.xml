@@ -1,34 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-
-    <!-- 导航栏文字样式 start -->
-    <!-- 选择后的字体贪色 -->
-    <color name="nav_text_selected_color">#3DAD37</color>
-    <!-- 未选择后的字体贪色 -->
-    <color name="nav_text_unselected_color">#7e8492</color>
-    <!-- 导航栏文字样式 end -->
-
-    <!-- 通用颜色 -->
-    <!-- 黑色 -->
-    <!--<color name="black">#000000</color>-->
-    <!-- 白色 -->
-    <!--<color name="white">#ffffff</color>-->
-    <!-- 灰色 -->
-    <color name="gray">#AFAFAF</color>
-    <!-- 全透明（无颜色） -->
-    <color name="translucence">#00000000</color>
-    <!--<color name="green">#B5E61D</color>-->
-    <!--<color name="blue">#11b7f3</color>-->
-    <!--<color name="whites">#ffffff</color>-->
-    <color name="grays">#818181</color>
-    <color name="gray_font">#818181</color>
-
-    <!-- 分割线 -->
-    <color name="line_bg">#eeeeee</color>
-    <!-- ListView分割线 -->
-    <color name="list_line_bg">#ECECEC</color>
-
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
@@ -126,7 +97,7 @@
     <color name="blueviolet">#8A2BE2</color><!--紫罗兰蓝色 -->
     <color name="lightskyblue">#87CEFA</color><!--亮天蓝色 -->
     <color name="skyblue">#87CEEB</color><!--天蓝色 -->
-
+    <color name="gray">#808080</color><!--灰色 -->
     <color name="grey">#808080</color><!--灰色 -->
     <color name="olive">#808000</color><!--橄榄色 -->
     <color name="purple">#800080</color><!--紫色 -->
@@ -222,5 +193,4 @@
     <color name="black_deep">#FF000000</color>
     <color name="btn_answer_pressed">#4ebcd3</color>
     <color name="btn_answer_normal">#2dafa3</color>
-
 </resources>
