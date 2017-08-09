@@ -1,0 +1,116 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Fragment显示内容的容器 -->
+    <FrameLayout
+        android:id="@+id/fl_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/nav_layout">
+    </FrameLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_above="@+id/nav_layout"
+        android:background="@color/line_bg" />
+
+    <LinearLayout
+        android:id="@+id/nav_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:background="@color/white">
+        <!-- 约影 -->
+        <RelativeLayout
+            android:id="@+id/rlYueYing"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:padding="2dp"
+            android:background="@drawable/selector_nav_rl"
+            android:layout_weight="2">
+
+            <RadioButton
+                android:id="@+id/rbtnYueYing"
+                style="@style/nav_radio_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:checked="true"
+                android:drawableTop="@drawable/selector_yueying"
+                android:text="约影"
+                android:textColor="@color/nav_selector_text_color" />
+        </RelativeLayout>
+
+        <!-- 消息 -->
+        <RelativeLayout
+            android:id="@+id/rlXiaoXi"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:padding="2dp"
+            android:background="@drawable/selector_nav_rl"
+            android:layout_weight="2" >
+
+            <RadioButton
+                android:id="@+id/rbtnXiaoXi"
+                style="@style/nav_radio_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:drawableTop="@drawable/selector_xiaoxi"
+                android:text="消息"
+                android:textColor="@color/nav_selector_text_color" />
+
+        </RelativeLayout>
+
+        <!-- 影讯 -->
+
+        <RelativeLayout
+            android:id="@+id/rlYingXun"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:padding="1dp"
+            android:background="@drawable/selector_nav_rl"
+            android:layout_weight="2" >
+
+            <RadioButton
+                android:id="@+id/rbtnYingXun"
+                style="@style/nav_radio_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:drawableTop="@drawable/selector_yingxun"
+                android:text="影讯"
+                android:textColor="@color/nav_selector_text_color" />
+
+        </RelativeLayout>
+
+        <!-- 个人中心 -->
+
+        <RelativeLayout
+            android:id="@+id/rlUser"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:padding="2dp"
+            android:background="@drawable/selector_nav_rl"
+            android:layout_weight="2" >
+
+            <RadioButton
+                android:id="@+id/rbtnUser"
+                style="@style/nav_radio_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:drawableTop="@drawable/selector_user"
+                android:text="个人中心"
+                android:textColor="@color/nav_selector_text_color" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

@@ -1,0 +1,50 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:actionOverflowButtonStyle">@style/YueYingActionOverflowButtonStyle</item>
+    </style>
+
+    <style name="YueYingActionOverflowButtonStyle">
+        <item name="android:src">@drawable/yue</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+
+    <!-- 导航栏单选按钮样式 start -->
+    <style name="nav_radio_style">
+        <item name="android:button">@null</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:clickable">false</item>
+    </style>
+    <!-- 导航栏单选按钮样式 end -->
+
+
+
+    <!-- 滑动关闭界面的样式(继承白色背景、无标题的样式) start -->
+    <style name="AppTheme.Slide" parent="@android:style/Theme.Light.NoTitleBar">
+        <!-- 使用透明色 -->
+        <item name="android:windowBackground">@color/translucence</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@style/AppTheme.Slide.Animation</item>
+    </style>
+
+    <style name="AppTheme.Slide.Animation" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/anim_slide_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/anim_slide_out</item>
+        <item name="android:activityCloseEnterAnimation">@anim/anim_slide_in</item>
+        <item name="android:activityCloseExitAnimation">@anim/anim_slide_out</item>
+    </style>
+    <!-- 滑动关闭界面的样式 end -->
+
+
+</resources>
