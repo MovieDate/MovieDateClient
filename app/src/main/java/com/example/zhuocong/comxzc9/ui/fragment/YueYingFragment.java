@@ -1,4 +1,4 @@
-package com.example.zhuocong.comxzc9.fragment;
+package com.example.zhuocong.comxzc9.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,18 +7,20 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.zhuocong.comxzc9.R;
-import com.example.zhuocong.comxzc9.basefragment.BaseFragment;
+import com.example.zhuocong.comxzc9.ui.basefragment.BaseFragment;
 
 /**
  * Created by zhuocong on 2017/8/4.
  */
 
-public class YingXunFragment extends BaseFragment {
+public class YueYingFragment extends BaseFragment {
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        mBaseView=inflater.inflate(R.layout.fragment_yingxun, null);
+        mBaseView=inflater.inflate(R.layout.fragment_yueying, null);
         mContext=getActivity();
+
         findView();
         initView();
         return mBaseView;

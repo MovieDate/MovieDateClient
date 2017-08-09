@@ -1,4 +1,4 @@
-package com.example.zhuocong.comxzc9.basefragment;
+package com.example.zhuocong.comxzc9.ui.basefragment;
 
 import android.app.Fragment;
 import android.content.Context;

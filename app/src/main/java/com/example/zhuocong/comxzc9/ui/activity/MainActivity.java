@@ -1,4 +1,4 @@
-package com.example.zhuocong.comxzc9.activity;
+package com.example.zhuocong.comxzc9.ui.activity;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -10,18 +10,16 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewConfiguration;
-import android.view.Window;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 
 import com.example.zhuocong.comxzc9.R;
-import com.example.zhuocong.comxzc9.fragment.UserFragment;
-import com.example.zhuocong.comxzc9.fragment.XiaoXiFragment;
-import com.example.zhuocong.comxzc9.fragment.YingXunFragment;
-import com.example.zhuocong.comxzc9.fragment.YueYingFragment;
+import com.example.zhuocong.comxzc9.ui.fragment.UserFragment;
+import com.example.zhuocong.comxzc9.ui.fragment.XiaoXiFragment;
+import com.example.zhuocong.comxzc9.ui.fragment.YingXunFragment;
+import com.example.zhuocong.comxzc9.ui.fragment.YueYingFragment;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
