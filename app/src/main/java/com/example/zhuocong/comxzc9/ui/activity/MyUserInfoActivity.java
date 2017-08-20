@@ -103,7 +103,7 @@ public class MyUserInfoActivity extends Activity{
     }
 
     private void initData(){
-        String phone = "18219111626";
+        String phone = "15089828319";
 
         //添加网络请求中需要的参数，查找个人信息需要的参数是phone
         final List<OkHttpUtils.Param> list = new ArrayList<OkHttpUtils.Param>();
@@ -146,6 +146,7 @@ public class MyUserInfoActivity extends Activity{
                 case 0:
                 //Gson解析数据
                     Gson gson=new Gson();
+                    userDataStr = msg.obj.toString();
                     if (userDataStr.equals("nodata")) {
                         Toast.makeText(MyUserInfoActivity.this, "没有找到数据，请重试！", Toast.LENGTH_SHORT).show();
                     } else {//如果后台成功返回User数据，则显示出来，这里我只显示一部分，其他还要补充进来
