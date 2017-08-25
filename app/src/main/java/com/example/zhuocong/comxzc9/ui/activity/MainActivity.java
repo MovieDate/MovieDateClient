@@ -4,7 +4,9 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Menu;
@@ -53,6 +55,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private RadioButton rbtnUser;
     //导航fragment列表
 
+
+
+
     private List<Fragment> mFragmentList;
     int featureId;
     private Menu menu;
@@ -63,6 +68,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         //菜单样式
         setOverflowButtonAlways();
+
+
 
         //Fragment转换
         findView();
@@ -182,6 +189,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 changeRadioButtonState(false,false,false,true);
                 hideAllFragment();
                 showFragment(mUserFragment);
+
                 break;
             default:
                 break;

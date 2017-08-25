@@ -2,7 +2,7 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:state_checked="true"
-        android:drawable="@drawable/xiaoxi_selectede">
+        android:drawable="@drawable/xiaoxi2">
 
     </item>
     <item

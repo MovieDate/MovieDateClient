@@ -188,8 +188,12 @@ public class OkHttpUtils {
      */  
     public static void post(String url, final ResultCallback callback, List<Param> params) {
         getmInstance().postRequest(url, callback, params);  
-    }  
-  
+    }
+
+    public static void post(String findUserByPhone, ResultCallback resultCallback) {
+
+    }
+
     /** 
      * http请求回调类,回调方法在UI线程中执行 
      * @param <T> 
@@ -232,7 +236,7 @@ public class OkHttpUtils {
         String key;//请求的参数
         String value;//参数的值
   
-        public Param() {  
+        public Param(int gender, int i) {
         }  
   
         public Param(String key, String value) {

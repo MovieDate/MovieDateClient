@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal"
-        android:background="@color/white">
+        android:background="#FCFCFC">
         <!-- 约影 -->
         <RelativeLayout
             android:id="@+id/rlYueYing"

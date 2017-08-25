@@ -2,6 +2,51 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:background="#ddd"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <Button
+            android:id="@+id/tv_yingxun_hotmovie"
+            android:textSize="20sp"
+            android:text="  近期热门  "
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="50dp" />
+        <TextView
+            android:background="@color/gray"
+            android:layout_width="1dp"
+            android:layout_height="match_parent" />
+        <Button
+            android:id="@+id/tv_yingxun_future"
+            android:textSize="20sp"
+            android:text="  即将上映  "
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="50dp" />
+        <TextView
+            android:background="@color/gray"
+            android:layout_width="1dp"
+            android:layout_height="match_parent" />
+        <Button
+            android:id="@+id/tv_yingxun_movietime"
+            android:textSize="20sp"
+            android:text="  影院排期  "
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="50dp" />
+    </LinearLayout>
+    <ListView
+        android:dividerHeight="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/yueyinglistview"/>
+
 
 
 </LinearLayout>

@@ -1,6 +1,7 @@
 package com.example.zhuocong.comxzc9.entity;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by wunaifu on 2017/8/9.
@@ -14,13 +15,23 @@ public class User {
     private int gender;//性别:男（0）女（1）
     private int age;
     private String habit;//爱好
-    private Date birthday;//生日
+    private String birthday;//生日
     private String job;//职业
     private String address;
-    private String weigh;//体重
+    private String weight;//体重
     private String height;//身高
     private String xingZuo;//星座
     private String signature;//个性签名
+    private List<User> list;
+
+
+    public List<User> getList() {
+        return list;
+    }
+
+    public void setList(List<User> list) {
+        this.list = list;
+    }
 
     public String getSignature() {
         return signature;
@@ -94,11 +105,11 @@ public class User {
         this.habit = habit;
     }
 
-    public Date getBirthday() {
+    public String getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(String birthday) {
         this.birthday = birthday;
     }
 
@@ -118,12 +129,12 @@ public class User {
         this.address = address;
     }
 
-    public String getWeigh() {
-        return weigh;
+    public String getWeight() {
+        return weight;
     }
 
-    public void setWeigh(String weigh) {
-        this.weigh = weigh;
+    public void setWeight(String weight) {
+        this.weight = weight;
     }
 
     public String getHeight() {
@@ -156,7 +167,7 @@ public class User {
                 ", birthday=" + birthday +
                 ", job='" + job + '\'' +
                 ", address='" + address + '\'' +
-                ", weigh='" + weigh + '\'' +
+                ", weigh='" + weight + '\'' +
                 ", height='" + height + '\'' +
                 ", xingZuo='" + xingZuo + '\'' +
                 ", signature='" + signature + '\'' +

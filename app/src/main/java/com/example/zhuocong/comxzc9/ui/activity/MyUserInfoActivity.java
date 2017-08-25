@@ -1,39 +1,27 @@
 package com.example.zhuocong.comxzc9.ui.activity;
-
+/*未能实现动态刷新，待解决
+* 生日栏还可以继续优化
+* */
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.content.Context;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewConfiguration;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.zhuocong.comxzc9.R;
 import com.example.zhuocong.comxzc9.commom.APPConfig;
 import com.example.zhuocong.comxzc9.entity.User;
-import com.example.zhuocong.comxzc9.ui.fragment.UserFragment;
-import com.example.zhuocong.comxzc9.ui.fragment.XiaoXiFragment;
-import com.example.zhuocong.comxzc9.ui.fragment.YingXunFragment;
-import com.example.zhuocong.comxzc9.ui.fragment.YueYingFragment;
 import com.example.zhuocong.comxzc9.utils.OkHttpUtils;
 import com.example.zhuocong.comxzc9.utils.SharedPrefsUtil;
 import com.google.gson.Gson;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,13 +43,16 @@ public class MyUserInfoActivity extends Activity{
     private TextView tv_phone;
     private TextView tv_address;
     private TextView tv_signature;
-    private TextView tv_introduction;
-    private TextView tv_hospital;
-    private TextView tv_office;
-    private TextView tv_amount;
-    private TextView tv_likenum;
+    private TextView tv_birthday;
+    private TextView tv_xingZuo;
+    private TextView tv_height;
+    private TextView tv_weight;
+    private TextView tv_job;
+    private TextView tv_habit;
 
-
+    public void refresh() {
+        onCreate(null);
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +62,9 @@ public class MyUserInfoActivity extends Activity{
     }
 
     private void initView(){
+        userDataStr = SharedPrefsUtil.getValue(MyUserInfoActivity.this,APPConfig.USERDATA,"");
+        Gson gson= new Gson();
+        userInfo=gson.fromJson(userDataStr,User.class);
 
         img_back = (ImageView) this.findViewById(R.id.amyinfo_img_back);
         tv_updateinfo = (TextView) this.findViewById(R.id.amyinfo_tv_updateinfo);
@@ -83,28 +77,35 @@ public class MyUserInfoActivity extends Activity{
         tv_phone = (TextView) this.findViewById(R.id.amyinfo_tv_phone);
         tv_address=(TextView) this.findViewById(R.id.amyinfo_tv_address);
         tv_signature = (TextView) this.findViewById(R.id.amyinfo_tv_signature);
+        tv_birthday= (TextView) this.findViewById(R.id.amyinfo_tv_birthday);
+        tv_xingZuo= (TextView) this.findViewById(R.id.amyinfo_tv_xingZuo);
+        tv_height= (TextView) this.findViewById(R.id.amyinfo_tv_height);
+        tv_weight= (TextView) this.findViewById(R.id.amyinfo_tv_weight);
+        tv_job= (TextView) this.findViewById(R.id.amyinfo_tv_job);
+        tv_habit=(TextView)this.findViewById(R.id.amyinfo_tv_habit);
 
         img_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                Intent intent = new Intent();
+                intent.setClass(MyUserInfoActivity.this,MainActivity.class );
+                startActivity(intent);
             }
         });
         tv_updateinfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent();
-//                intent.setClass(MyUserInfoActivity.this,UpdateMyInfoActivity.class );
-//                startActivity(intent);
-//                finish();
-                Toast.makeText(MyUserInfoActivity.this, "更新待完成", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent();
+                intent.setClass(MyUserInfoActivity.this,MyUserInfoUpdateActivity.class );
+                startActivity(intent);
+                finish();
+//                Toast.makeText(MyUserInfoActivity.this, "更新待完成", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void initData(){
-        String phone = "15089828319";
-
+        String phone=userInfo.getPhone();
         //添加网络请求中需要的参数，查找个人信息需要的参数是phone
         final List<OkHttpUtils.Param> list = new ArrayList<OkHttpUtils.Param>();
         OkHttpUtils.Param accountParam = new OkHttpUtils.Param("phone", phone);
@@ -146,7 +147,7 @@ public class MyUserInfoActivity extends Activity{
                 case 0:
                 //Gson解析数据
                     Gson gson=new Gson();
-                    userDataStr = msg.obj.toString();
+                    //userDataStr = msg.obj.toString();
                     if (userDataStr.equals("nodata")) {
                         Toast.makeText(MyUserInfoActivity.this, "没有找到数据，请重试！", Toast.LENGTH_SHORT).show();
                     } else {//如果后台成功返回User数据，则显示出来，这里我只显示一部分，其他还要补充进来
@@ -160,9 +161,15 @@ public class MyUserInfoActivity extends Activity{
                         }else {
                             tv_gender.setText("女");
                         }
+                        tv_birthday.setText(userInfo.getBirthday());
+                        tv_xingZuo.setText(userInfo.getXingZuo());
+                        tv_height.setText(userInfo.getHeight());
+                        tv_weight.setText(userInfo.getWeight());
                         tv_phone.setText(userInfo.getPhone());
                         tv_address.setText(userInfo.getAddress());
+                        tv_job.setText(userInfo.getJob());
                         tv_signature.setText(userInfo.getSignature());
+                        tv_habit.setText(userInfo.getHabit());
                     }
                     break;
             }
