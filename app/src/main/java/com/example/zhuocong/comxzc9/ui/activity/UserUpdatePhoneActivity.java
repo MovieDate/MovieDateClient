@@ -66,9 +66,9 @@ public class UserUpdatePhoneActivity extends Activity {
         updatephone_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setClass(UserUpdatePhoneActivity.this,MainActivity.class );
-                startActivity(intent);
+//                Intent intent = new Intent();
+//                intent.setClass(UserUpdatePhoneActivity.this,MainActivity.class );
+//                startActivity(intent);
                 finish();
             }
         });

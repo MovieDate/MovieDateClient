@@ -112,9 +112,9 @@ public class UserUpdatePswActivity extends Activity {
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent();
-                intent.setClass(UserUpdatePswActivity.this,MainActivity.class);
-                startActivity(intent);
+//                Intent intent=new Intent();
+//                intent.setClass(UserUpdatePswActivity.this,MainActivity.class);
+//                startActivity(intent);
                 finish();
             }
         });

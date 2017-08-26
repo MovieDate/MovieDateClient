@@ -8,12 +8,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewConfiguration;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.example.zhuocong.comxzc9.R;
 import com.example.zhuocong.comxzc9.ui.fragment.UserFragment;
@@ -55,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private RadioButton rbtnUser;
     //导航fragment列表
 
-
+    private long exitTime = 0;
 
 
     private List<Fragment> mFragmentList;
@@ -239,6 +241,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override//双击退出APP
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            if ((System.currentTimeMillis() - exitTime) > 2000) {
+                Toast.makeText(getApplicationContext(), "再按一次退出", Toast.LENGTH_SHORT).show();
+                exitTime = System.currentTimeMillis();
+            } else {
+                finish();
+
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
 }

@@ -133,7 +133,7 @@ public class UserFragment extends BaseFragment{
                 Intent intent = new Intent();
                 intent.setClass(getActivity(), LoginActivity.class);
                 startActivity(intent);
-
+                getActivity().finish();
             }
         });
         ll__finish.setOnClickListener(new View.OnClickListener() {
