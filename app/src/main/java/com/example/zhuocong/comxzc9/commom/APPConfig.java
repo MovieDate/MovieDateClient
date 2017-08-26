@@ -15,6 +15,7 @@ public class APPConfig {
     public static String updatePhone=base_url+"/userController/updatePhoneById";
     public static String updatePassword=base_url+"/userController/updatePassword";
     public static String allUser=base_url+"/userController/allUser";
+    public static String allPost=base_url+"/postController/findAllPost";
 
     public static String USERDATA = "userData";//获取当前用户的key
     public static String ACCOUNT = "account";
