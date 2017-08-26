@@ -24,6 +24,7 @@ import com.example.zhuocong.comxzc9.ui.activity.MainActivity;
 import com.example.zhuocong.comxzc9.ui.basefragment.BaseFragment;
 import com.example.zhuocong.comxzc9.utils.OkHttpUtils;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
@@ -42,9 +43,7 @@ public class YueYingFragment extends BaseFragment{
 
     private ListView yueyinglistview;
     private Button test;
-    private String userDataStr;
-    private Post postInfo;
-    private PostList postListInfo;
+    private List<Post> postList;
     private YueyingFragmentAdapter yueyingFragmentAdapter;
     Gson gson = new Gson();
 
@@ -72,40 +71,62 @@ public class YueYingFragment extends BaseFragment{
 
 
     public void initMotion(){
-                new Thread(new Runnable() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //post方式连接  url
+                OkHttpUtils.get(APPConfig.allPost, new OkHttpUtils.ResultCallback() {
                     @Override
-                    public void run() {
-                        //post方式连接  url
-                        OkHttpUtils.post(APPConfig.allPost, new OkHttpUtils.ResultCallback() {
-                            @Override
-                            public void onSuccess(Object response) {
+                    public void onSuccess(Object response) {
 
-                                Message message = new Message();
-                                message.what = 0;
-                                message.obj = response;
-                                String postDateStr=response.toString();
-                                Log.d("t","post"+postDateStr);
-                                List<Post> postList = gson.fromJson("postDateStr", new TypeToken<List<Post>>() {}.getType());
-                                yueyingFragmentAdapter=new YueyingFragmentAdapter(postList,getActivity());
-                                handler.sendMessage(message);
-                            }
+                        Message message = new Message();
+                        message.what = 0;
+                        message.obj = response;
+                        String postDateStr=response.toString();
+                        Log.d("postDateStr","post"+postDateStr);
 
-                            @Override
-                            public void onFailure(Exception e) {
-                                Toast.makeText(getActivity(), "服务器连接失败，请重试！", Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                        handler.sendMessage(message);
 
                     }
-                }).start();
+
+                    @Override
+                    public void onFailure(Exception e) {
+                        Log.d("postDateStr","服务器连接失败，请重试！");
+                        Toast.makeText(getActivity(), "服务器连接失败，请重试！", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+            }
+        }).start();
 
     }
 
     private Handler handler= new Handler(){
         @Override
         public void handleMessage(Message msg){
+            String postDateStr=msg.obj.toString();
+            if (postDateStr.equals("nodata")) {
+                Toast.makeText(getActivity(), "还没有用户发起约影", Toast.LENGTH_SHORT).show();
+            } else {
+                //gson解析数据时，
+                try {
+                    postList = gson.fromJson("postDateStr", new TypeToken<List<Post>>() {}.getType());
+                    if (postList != null && postList.size() > 0) {
+                        Log.d("postDateStr", "postList=" + postList);
+                        yueyingFragmentAdapter = new YueyingFragmentAdapter(postList, getActivity());
+                        yueyinglistview.setAdapter(yueyingFragmentAdapter);
+                    } else {
 
-                yueyinglistview.setAdapter(yueyingFragmentAdapter);
+                    }
+                } catch (JsonSyntaxException e1) {
+                    Toast.makeText(getActivity(), "内部数据解析异常", Toast.LENGTH_SHORT).show();
+                    Log.e("JsonSyntaxException",""+e1.getMessage());
+                    e1.printStackTrace();
+                }
+
+            }
+
+
 
         }
 
