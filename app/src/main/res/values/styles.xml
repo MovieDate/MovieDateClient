@@ -3,6 +3,25 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="android:actionOverflowButtonStyle">@style/YueYingActionOverflowButtonStyle</item>
+        <item name="colorPrimary">@color/btn_gray_pressed</item>
+        <item name="colorPrimaryDark">@color/btn_green_noraml</item><!--手机状态栏颜色-->
+        <item name="colorAccent">@color/btn_gray_pressed</item>
+        <item name="actionBarSize">50dip</item>  <!--顶部栏大小-->
+    </style>
+<!--自定义状态栏需要再MainActivity继承Activty,否则会闪退-->
+    <style name="MyTheme" parent="@android:style/Widget.Holo.Light.ActionBar">
+        <item name="android:titleTextStyle">@style/myActionBar</item> <!--设置titleTextStyle-->
+    </style>
+
+    <style name="myActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
+        <item name="android:background">#54BA42</item>
+        <item name="android:backgroundStacked">#54BA42</item>
+        <item name="android:titleTextStyle">@style/actionBarTitle</item> <!--设置titleTextStyle-->
+    </style>
+
+    <style name="actionBarTitle">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">20sp</item>
     </style>
 
     <style name="YueYingActionOverflowButtonStyle">
@@ -61,6 +80,18 @@
         <item name="android:layout_marginTop">12dp</item>
         <item name="android:padding">1px</item>
         <item name="android:background">@drawable/bg_layout_shape</item>
+
+    </style>
+
+    <!--发布样式-->
+    <style name="start_layout">
+        <item name="android:orientation">horizontal</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginLeft">8dp</item>
+        <item name="android:layout_marginRight">8dp</item>
+        <item name="android:layout_marginTop">12dp</item>
+        <item name="android:padding">1px</item>
 
     </style>
 

@@ -3,11 +3,13 @@ package com.example.zhuocong.comxzc9.ui.activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.menu.MenuView;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Menu;
@@ -26,6 +28,7 @@ import com.example.zhuocong.comxzc9.ui.fragment.YueYingFragment;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+//AppCompatActivity
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
    //声明对象
@@ -57,6 +60,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private RadioButton rbtnUser;
     //导航fragment列表
 
+    private MenuView.ItemView action_start;
+
     private long exitTime = 0;
 
 
@@ -70,8 +75,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         //菜单样式
         setOverflowButtonAlways();
-
-
 
         //Fragment转换
         findView();
@@ -93,6 +96,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         rbtnXiaoXi= (RadioButton) findViewById(R.id.rbtnXiaoXi);
         rbtnYingXun= (RadioButton) findViewById(R.id.rbtnYingXun);
         rbtnUser= (RadioButton) findViewById(R.id.rbtnUser);
+        action_start=(MenuView.ItemView)findViewById(R.id.action_start);
     }
 
     //初始化控件
@@ -211,10 +215,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        /*int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_add) {
+            Intent intent=new Intent();
+            intent.setClass(MainActivity.this,StarPostActivity.class);
+            startActivity(intent);
+            finish();
             return true;
         }
         if (id == R.id.action_search) {
@@ -225,7 +233,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
 
-        return super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(item);*/
+        switch(item.getItemId()){
+            case R.id.action_start:
+                Intent intent=new Intent();
+                intent.setClass(MainActivity.this,StarPostActivity.class);
+                startActivity(intent);
+                finish();
+                break;
+        }
+        return true;
     }
 
     //设置弹出菜单样式

@@ -1,6 +1,5 @@
 package com.example.zhuocong.comxzc9.ui.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -9,7 +8,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -18,20 +16,12 @@ import com.example.zhuocong.comxzc9.R;
 import com.example.zhuocong.comxzc9.adapter.YueyingFragmentAdapter;
 import com.example.zhuocong.comxzc9.commom.APPConfig;
 import com.example.zhuocong.comxzc9.entity.Post;
-import com.example.zhuocong.comxzc9.entity.PostList;
-import com.example.zhuocong.comxzc9.entity.User;
-import com.example.zhuocong.comxzc9.ui.activity.MainActivity;
 import com.example.zhuocong.comxzc9.ui.basefragment.BaseFragment;
 import com.example.zhuocong.comxzc9.utils.OkHttpUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -42,7 +32,6 @@ public class YueYingFragment extends BaseFragment{
 
 
     private ListView yueyinglistview;
-    private Button test;
     private List<Post> postList;
     private YueyingFragmentAdapter yueyingFragmentAdapter;
     Gson gson = new Gson();
@@ -54,16 +43,7 @@ public class YueYingFragment extends BaseFragment{
         mContext=getActivity();
 
         yueyinglistview=(ListView)mBaseView.findViewById(R.id.yueyinglistview);
-        test=(Button)mBaseView.findViewById(R.id.test);
-
-
         initMotion();
-        test.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getActivity(),"111",Toast.LENGTH_SHORT).show();
-            }
-        });
         findView();
         initView();
         return mBaseView;
@@ -84,7 +64,6 @@ public class YueYingFragment extends BaseFragment{
                         message.obj = response;
                         String postDateStr=response.toString();
                         Log.d("postDateStr","post"+postDateStr);
-
                         handler.sendMessage(message);
 
                     }
@@ -110,7 +89,7 @@ public class YueYingFragment extends BaseFragment{
             } else {
                 //gson解析数据时，
                 try {
-                    postList = gson.fromJson("postDateStr", new TypeToken<List<Post>>() {}.getType());
+                    postList = gson.fromJson(postDateStr, new TypeToken<List<Post>>() {}.getType());
                     if (postList != null && postList.size() > 0) {
                         Log.d("postDateStr", "postList=" + postList);
                         yueyingFragmentAdapter = new YueyingFragmentAdapter(postList, getActivity());

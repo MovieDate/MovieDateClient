@@ -38,7 +38,6 @@
             android:layout_width="60dp"
             android:layout_height="match_parent" />
 
-
     </LinearLayout>
     <ScrollView
         android:layout_marginBottom="20dp"
@@ -253,23 +252,6 @@
                     style="@style/bottom_layout">
                     <TextView
                         style="@style/usertext"
-                        android:textColor="@color/gray"
-                        android:text="个人签名" />
-                    <EditText
-                        style="@style/usertext"
-                        android:background="@drawable/edittext_back"
-                        android:id="@+id/updatemyinfo_et_signature"
-                        android:gravity="right"
-                        android:hint="个人签名" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                style="@style/wrap_layout" >
-                <!-- 上圆角-->
-                <LinearLayout style="@style/top_layout">
-                    <TextView
-                        style="@style/usertext"
                         android:text="爱好"
                         android:textColor="@color/gray" />
                     <EditText
@@ -279,8 +261,25 @@
                         android:gravity="right"
                         android:hint="爱好" />
                 </LinearLayout>
+            </LinearLayout>
 
-                <View style="@style/bg_line"/>
+            <LinearLayout
+                style="@style/wrap_layout" >
+                <!-- 上圆角-->
+                <LinearLayout style="@style/top_layout">
+
+                    <TextView
+                        style="@style/usertext"
+                        android:textColor="@color/gray"
+                        android:text="个人签名" />
+                    <EditText
+                        style="@style/usertext"
+                        android:background="@drawable/edittext_back"
+                        android:id="@+id/updatemyinfo_et_signature"
+                        android:gravity="right"
+                        android:hint="个人签名" />
+                </LinearLayout>
+
                 <!-- 下圆角-->
                 <LinearLayout
                     style="@style/bottom_layout">

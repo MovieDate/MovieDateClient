@@ -47,12 +47,12 @@ public class YueyingFragmentAdapter extends BaseAdapter {
         View view = inflater.inflate(R.layout.yueyinglist, null);
         Post post =  getItem(position);
         //在view视图中查找id为image_photo的控件
-        TextView image_photo = (TextView) view.findViewById(R.id.image_photo);
-        TextView tv_name = (TextView) view.findViewById(R.id.name);
-        TextView tv_age = (TextView) view.findViewById(R.id.age);
-        image_photo.setText(post.getMovieName());
-        tv_name.setText(post.getDetails());
-        tv_age.setText(post.getSite());
+        TextView tv_movieName = (TextView) view.findViewById(R.id.yueyinglist_tv_movieName);
+        TextView tv_site = (TextView) view.findViewById(R.id.yueyinglist_tv_site);
+        TextView tv_postTime = (TextView) view.findViewById(R.id.yueyinglist_tv_postTime);
+        tv_movieName.setText("约影影片："+post.getMovieName());
+        tv_site.setText("约影地点："+post.getSite());
+        tv_postTime.setText("发布于"+post.getPostTime());
         return view;
     }
 }

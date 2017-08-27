@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:background="@color/btn_gray_pressed"
+        android:layout_width="match_parent"
+        android:layout_height="35dp">
+
+        <ImageView
+            android:id="@+id/starpost_img_back"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/back01"
+            android:layout_width="60dp"
+            android:layout_height="25dp" />
+        <TextView
+            android:text="发布约影信息"
+            android:textSize="20dp"
+            android:textColor="#fffff1"
+            android:layout_gravity="center_vertical"
+            android:layout_centerHorizontal="true"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/starpost_tv_post"
+            android:text="发布"
+            android:gravity="center"
+            android:layout_gravity="center_vertical"
+            android:textSize="20dp"
+            android:textColor="#fffff1"
+            android:layout_marginRight="4dp"
+            android:layout_width="60dp"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+
+    <ScrollView
+        android:layout_marginBottom="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        style="@style/start_layout">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+    <LinearLayout
+        android:layout_marginTop="0dp"
+        android:layout_height="40dp"
+        android:layout_width="match_parent"
+        >
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="40dp"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:text="影片名字："
+            android:layout_marginLeft="0dp"/>
+        <EditText
+            android:layout_width="0dp"
+            android:layout_weight="5"
+            android:layout_height="40dp"
+            android:background="@drawable/edittext_back"
+            android:id="@+id/starpost_et_moviename"
+            android:hint="输入您要约影的影片名字"
+            android:layout_marginRight="10dp"/>
+    </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_marginTop="0dp"
+            android:layout_height="40dp"
+            android:layout_width="match_parent"
+           >
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_height="40dp"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:text="约影地点："
+                android:layout_marginLeft="0dp"/>
+            <EditText
+                android:layout_width="0dp"
+                android:layout_weight="5"
+                android:layout_height="40dp"
+                android:background="@drawable/edittext_back"
+                android:id="@+id/starpost_et_site"
+                android:singleLine="true"
+                android:hint="输入您要约影的地点及影院"
+                android:layout_marginRight="10dp"/>
+        </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="0dp"
+                android:layout_height="40dp"
+                android:layout_width="match_parent"
+                >
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:layout_height="40dp"
+                    android:textColor="@color/black"
+                    android:textSize="20dp"
+                    android:text="约影时间："
+                    android:layout_marginLeft="0dp"/>
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_weight="5"
+                    android:layout_height="40dp"
+                    android:background="@drawable/edittext_back"
+                    android:id="@+id/starpost_et_movietime"
+                    android:hint="格式201708201950具体场次时间"
+                    android:singleLine="true"
+                    android:layout_marginRight="10dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="0dp"
+                android:layout_height="40dp"
+                android:layout_width="match_parent"
+                >
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:textColor="@color/black"
+                    android:textSize="20dp"
+                    android:text="约影对象："
+                    android:layout_marginLeft="0dp"/>
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <RadioButton
+                        android:id="@+id/starpost_rb_gender0"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="14dp"
+                        android:textColor="#2d2f31"
+                        android:text="男"
+                        android:checked="true"
+                        />
+                    <RadioButton
+                        android:id="@+id/starpost_rb_gender1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="0dp"
+                        android:textColor="#2d2f31"
+                        android:text="女" />
+                    <RadioButton
+                        android:id="@+id/starpost_rb_gender2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="0dp"
+                        android:textColor="#2d2f31"
+                        android:text="不限" />
+                </RadioGroup>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="0dp"
+                android:layout_height="40dp"
+                android:layout_width="match_parent"
+                >
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:textColor="@color/black"
+                    android:textSize="20dp"
+                    android:text="约影对象："
+                    android:layout_marginLeft="0dp"/>
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+                    <RadioButton
+                        android:id="@+id/starpost_rb_movietype0"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="14dp"
+                        android:textColor="#2d2f31"
+                        android:text="单独约影"
+                        android:checked="true"
+                        />
+                    <RadioButton
+                        android:id="@+id/starpost_rb_movietype1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="0dp"
+                        android:textColor="#2d2f31"
+                        android:text="多人约影" />
+
+                </RadioGroup>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="0dp"
+                android:layout_height="40dp"
+                android:layout_width="match_parent"
+                >
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:layout_height="28dp"
+                    android:textColor="@color/black"
+                    android:textSize="20dp"
+                    android:text="约影内容："
+                    android:layout_marginLeft="0dp"/>
+            </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="0dp"
+            android:layout_height="400dp"
+            android:layout_width="match_parent"
+            >
+            <EditText
+
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="@drawable/edittext_back"
+                android:id="@+id/starpost_rb_details"
+                android:hint="一个人看电影，略孤单，两个人看电影，bigger than bigger,多人看电影，feel so happy！"
+                android:layout_marginRight="10dp"/>
+        </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+
+
+</LinearLayout>

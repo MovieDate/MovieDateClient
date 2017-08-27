@@ -90,6 +90,7 @@ public class MyUserInfoActivity extends Activity{
                 Intent intent = new Intent();
                 intent.setClass(MyUserInfoActivity.this,MainActivity.class );
                 startActivity(intent);
+                finish();
             }
         });
         tv_updateinfo.setOnClickListener(new View.OnClickListener() {
