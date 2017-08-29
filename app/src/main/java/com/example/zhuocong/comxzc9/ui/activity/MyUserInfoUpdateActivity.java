@@ -111,9 +111,9 @@ public class MyUserInfoUpdateActivity extends Activity {
         img_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
+               /* Intent intent = new Intent();
                 intent.setClass(MyUserInfoUpdateActivity.this,MyUserInfoActivity.class );
-                startActivity(intent);
+                startActivity(intent);*/
                 finish();
             }
         });

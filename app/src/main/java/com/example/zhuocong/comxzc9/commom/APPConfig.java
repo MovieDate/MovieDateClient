@@ -17,11 +17,15 @@ public class APPConfig {
     public static String allUser=base_url+"/userController/allUser";
     public static String allPost=base_url+"/postController/findAllPost";
     public static String post=base_url+"/postController/addPostByPostPersonId";
+    public static String findPostByid=base_url+"/postController/findPostByid";
+
 
     public static String USERDATA = "userData";//获取当前用户的key
     public static String ACCOUNT = "account";
     public static String NAME = "name";
     public static String PSW = "password";
+    public static String PID="pid";//获取帖子id
+    public static String POSTDATA = "postData";//获取当前用户的key
 
     public static String IS_LOGIN = "login";
 }

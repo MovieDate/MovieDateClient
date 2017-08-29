@@ -87,9 +87,9 @@ public class MyUserInfoActivity extends Activity{
         img_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
+                /*Intent intent = new Intent();
                 intent.setClass(MyUserInfoActivity.this,MainActivity.class );
-                startActivity(intent);
+                startActivity(intent);*/
                 finish();
             }
         });
@@ -99,7 +99,6 @@ public class MyUserInfoActivity extends Activity{
                 Intent intent = new Intent();
                 intent.setClass(MyUserInfoActivity.this,MyUserInfoUpdateActivity.class );
                 startActivity(intent);
-                finish();
 //                Toast.makeText(MyUserInfoActivity.this, "更新待完成", Toast.LENGTH_SHORT).show();
             }
         });

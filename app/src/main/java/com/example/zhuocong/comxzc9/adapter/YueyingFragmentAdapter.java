@@ -8,7 +8,9 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.zhuocong.comxzc9.R;
+import com.example.zhuocong.comxzc9.commom.APPConfig;
 import com.example.zhuocong.comxzc9.entity.Post;
+import com.example.zhuocong.comxzc9.utils.SharedPrefsUtil;
 
 import java.util.List;
 
@@ -50,9 +52,13 @@ public class YueyingFragmentAdapter extends BaseAdapter {
         TextView tv_movieName = (TextView) view.findViewById(R.id.yueyinglist_tv_movieName);
         TextView tv_site = (TextView) view.findViewById(R.id.yueyinglist_tv_site);
         TextView tv_postTime = (TextView) view.findViewById(R.id.yueyinglist_tv_postTime);
+        TextView tv_id=(TextView)view.findViewById(R.id.yueyinglist_tv_id);
+        String id = String.valueOf(post.getId());
+        tv_id.setText(id);
         tv_movieName.setText("约影影片："+post.getMovieName());
         tv_site.setText("约影地点："+post.getSite());
         tv_postTime.setText("发布于"+post.getPostTime());
+
         return view;
     }
 }

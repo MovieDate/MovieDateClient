@@ -90,9 +90,9 @@ public class StarPostActivity extends Activity {
         starpost_img_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent();
+               /* Intent intent = new Intent();
                 intent.setClass(StarPostActivity.this,MainActivity.class );
-                startActivity(intent);
+                startActivity(intent);*/
                 finish();
             }
         });

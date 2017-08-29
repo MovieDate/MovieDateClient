@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:background="@color/btn_gray_pressed"
+        android:layout_width="match_parent"
+        android:layout_height="35dp">
+
+        <ImageView
+            android:id="@+id/details_img_back"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/back01"
+            android:layout_width="60dp"
+            android:layout_height="25dp" />
+        <TextView
+            android:text="约影详情"
+            android:textSize="20dp"
+            android:textColor="#fffff1"
+            android:layout_gravity="center_vertical"
+            android:layout_centerHorizontal="true"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:gravity="center"
+            android:layout_gravity="center_vertical"
+            android:textSize="20dp"
+            android:textColor="#fffff1"
+            android:layout_marginRight="4dp"
+            android:layout_width="60dp"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#EBEBEB">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+        <LinearLayout
+            android:id="@+id/details_ll_myuser"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp" 
+            android:src="@mipmap/ic_launcher_round"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="vertical">
+        <TextView
+            android:id="@+id/details_tv_nickname"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:editable="false"
+            android:gravity="left"
+            />
+            <TextView
+                android:id="@+id/details_tv_posttime"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:gravity="left"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="20dp"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent">
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="15dp"
+                    android:textSize="20dp"
+                    android:text="影片名字:"
+                    />
+                <TextView  android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="6"
+                    android:id="@+id/details_tv_moviename"
+                    android:gravity="left"
+                    android:textSize="20dp"
+                    android:textColor="@color/black"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="5dp"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent">
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_weight="1"
+                    android:textSize="20dp"
+                    android:text="约影地点:"
+                    />
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="6"
+                    android:id="@+id/details_tv_site"
+                    android:gravity="left"
+                    android:textSize="20dp"
+                    android:textColor="@color/black"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="5dp"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent">
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_weight="1"
+                    android:textSize="20dp"
+                    android:text="约影时间:"
+                    />
+                <TextView  android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="6"
+                    android:id="@+id/details_tv_movietime"
+                    android:gravity="left"
+                    android:textSize="20dp"
+                    android:textColor="@color/black"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="5dp"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent">
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_weight="1"
+                    android:textSize="20dp"
+                    android:text="指定约影对象:"
+                    />
+                <TextView  android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="6"
+                    android:id="@+id/details_tv_sex"
+                    android:gravity="left"
+                    android:textSize="20dp"
+                    android:textColor="@color/black"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="5dp"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent">
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_weight="1"
+                    android:textSize="20dp"
+                    android:text="指定约影方式:"
+                    />
+                <TextView  android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="6"
+                    android:id="@+id/details_tv_movietype"
+                    android:gravity="left"
+                    android:textSize="20dp"
+                    android:textColor="@color/black"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="5dp"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:textSize="20dp"
+                    android:text="约影内容："
+                    />
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="6"
+                    android:id="@+id/details_tv_details"
+                    android:gravity="left"
+                    android:textSize="20dp"
+                    android:textColor="@color/black"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="20dp"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="right"
+                >
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:id="@+id/details_tv_apply"
+                    android:textSize="15dp"
+                    android:text="立即报名"
+                    />
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:id="@+id/details_tv_review"
+                    android:textSize="15dp"
+                    android:text="评论"
+                    />
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:id="@+id/details_tv_collect"
+                    android:textSize="15dp"
+                    android:text="收藏"
+                    android:layout_marginRight="10dp"
+                    />
+
+            </LinearLayout>
+            <View
+                android:layout_marginTop="10dp"
+                style="@style/bg_line"/>
+
+            <ListView
+                android:dividerHeight="15dp"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/reviewlistview"/>
+
+
+
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

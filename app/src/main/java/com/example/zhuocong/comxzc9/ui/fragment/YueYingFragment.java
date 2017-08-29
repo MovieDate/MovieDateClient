@@ -1,5 +1,6 @@
 package com.example.zhuocong.comxzc9.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -8,16 +9,22 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.zhuocong.comxzc9.R;
 import com.example.zhuocong.comxzc9.adapter.YueyingFragmentAdapter;
 import com.example.zhuocong.comxzc9.commom.APPConfig;
 import com.example.zhuocong.comxzc9.entity.Post;
+import com.example.zhuocong.comxzc9.ui.activity.LoginActivity;
+import com.example.zhuocong.comxzc9.ui.activity.RegisterActivity;
+import com.example.zhuocong.comxzc9.ui.activity.YueyingDetails;
 import com.example.zhuocong.comxzc9.ui.basefragment.BaseFragment;
 import com.example.zhuocong.comxzc9.utils.OkHttpUtils;
+import com.example.zhuocong.comxzc9.utils.SharedPrefsUtil;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
@@ -32,6 +39,7 @@ public class YueYingFragment extends BaseFragment{
 
 
     private ListView yueyinglistview;
+
     private List<Post> postList;
     private YueyingFragmentAdapter yueyingFragmentAdapter;
     Gson gson = new Gson();
@@ -43,9 +51,24 @@ public class YueYingFragment extends BaseFragment{
         mContext=getActivity();
 
         yueyinglistview=(ListView)mBaseView.findViewById(R.id.yueyinglistview);
+
+
         initMotion();
         findView();
         initView();
+
+        yueyinglistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                TextView tv_id=(TextView)view.findViewById(R.id.yueyinglist_tv_id);
+                String id=tv_id.getText().toString().trim();
+                Log.d("testRun","id = "+id);
+                SharedPrefsUtil.putValue(getActivity(), APPConfig.PID,id);
+                Intent intent=new Intent();
+                intent.setClass(getActivity(), YueyingDetails.class);
+                startActivity(intent);
+            }
+        });
         return mBaseView;
     }
 
@@ -58,7 +81,6 @@ public class YueYingFragment extends BaseFragment{
                 OkHttpUtils.get(APPConfig.allPost, new OkHttpUtils.ResultCallback() {
                     @Override
                     public void onSuccess(Object response) {
-
                         Message message = new Message();
                         message.what = 0;
                         message.obj = response;
@@ -110,6 +132,7 @@ public class YueYingFragment extends BaseFragment{
         }
 
     };
+
 
 
     @Override

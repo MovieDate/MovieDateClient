@@ -38,9 +38,10 @@ public class UserSettingActivity extends Activity {
         img_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent();
+               /* Intent intent=new Intent();
                 intent.setClass(UserSettingActivity.this,MainActivity.class);
-                startActivity(intent);
+                startActivity(intent);*/
+                finish();
             }
         });
         ll_help.setOnClickListener(new View.OnClickListener() {

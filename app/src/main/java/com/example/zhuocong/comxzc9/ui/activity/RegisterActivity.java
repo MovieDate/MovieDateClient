@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
@@ -33,6 +34,7 @@ public class RegisterActivity extends Activity {
     private EditText et_register_name;
     private RadioButton rb_register_gender0;
     private RadioButton rb_register_gender1;
+    private ImageView register_img_back;
 
     private String account;
     private String psd;
@@ -61,6 +63,14 @@ public class RegisterActivity extends Activity {
         et_register_name=(EditText)this.findViewById(R.id.et_register_name);
         rb_register_gender0=(RadioButton)this.findViewById(R.id.rb_register_gender0);
         rb_register_gender1=(RadioButton)this.findViewById(R.id.rb_register_gender1);
+        register_img_back=(ImageView)this.findViewById(R.id.register_img_back);
+
+        register_img_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
 
     }

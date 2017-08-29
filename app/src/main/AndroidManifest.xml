@@ -40,6 +40,10 @@
 
         <activity android:name=".ui.activity.StarPostActivity"></activity>
 
+        <activity android:name=".ui.activity.SearchActivity"></activity>
+
+        <activity android:name=".ui.activity.YueyingDetails"></activity>
+
     </application>
 
 

@@ -62,6 +62,15 @@ public class UserUpdatePswActivity extends Activity {
 
 
         tv_account.setText("账号："+account);
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Intent intent=new Intent();
+//                intent.setClass(UserUpdatePswActivity.this,MainActivity.class);
+//                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     private void initDatas() {
@@ -109,15 +118,7 @@ public class UserUpdatePswActivity extends Activity {
             }
         });
 
-        ivBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                Intent intent=new Intent();
-//                intent.setClass(UserUpdatePswActivity.this,MainActivity.class);
-//                startActivity(intent);
-                finish();
-            }
-        });
+
 
     }
 
