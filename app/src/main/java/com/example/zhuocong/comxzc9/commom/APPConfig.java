@@ -18,6 +18,8 @@ public class APPConfig {
     public static String allPost=base_url+"/postController/findAllPost";
     public static String post=base_url+"/postController/addPostByPostPersonId";
     public static String findPostByid=base_url+"/postController/findPostByid";
+    public static String addCollectByCollecterId=base_url+"/collectController/addCollectByCollecterId";
+    public static String findCollectByCollecterId=base_url+"/collectController/findCollectByCollecterId";
 
 
     public static String USERDATA = "userData";//获取当前用户的key
@@ -26,6 +28,9 @@ public class APPConfig {
     public static String PSW = "password";
     public static String PID="pid";//获取帖子id
     public static String POSTDATA = "postData";//获取当前用户的key
+    public static String COLLECTDATA = "list1";
+    public static String SIZE="size";
+    public static String SI="si";
 
     public static String IS_LOGIN = "login";
 }

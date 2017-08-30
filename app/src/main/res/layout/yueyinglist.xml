@@ -7,8 +7,6 @@
         android:id="@+id/yueyinglist_tv_movieName"
         android:layout_width="100dp"
         android:layout_height="70dp"
-
-
         android:padding="10dp"/>
     <TextView
         android:id="@+id/yueyinglist_tv_site"

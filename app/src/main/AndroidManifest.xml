@@ -44,6 +44,8 @@
 
         <activity android:name=".ui.activity.YueyingDetails"></activity>
 
+        <activity android:name=".ui.activity.XiaoxiMyFriend"></activity>
+
     </application>
 
 

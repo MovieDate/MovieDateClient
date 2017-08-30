@@ -23,7 +23,10 @@ import com.example.zhuocong.comxzc9.utils.OkHttpUtils;
 import com.example.zhuocong.comxzc9.utils.SharedPrefsUtil;
 import com.google.gson.Gson;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -53,18 +56,20 @@ public class YueyingDetails extends Activity {
     private ListView reviewlistview;
     private TextView review_details;
 
-    private String id;
+    private String postId;
+    private String collecterId;
+    private String collectTime;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_yueying_details);
         initView();
         initData();
+        initMotion();
     }
 
     public void initView(){
-
-
         userDataStr = SharedPrefsUtil.getValue(YueyingDetails.this,APPConfig.USERDATA,"");
         Gson gson= new Gson();
         userInfo=gson.fromJson(userDataStr,User.class);
@@ -116,12 +121,12 @@ public class YueyingDetails extends Activity {
 
     private void initData(){
         /*id= String.valueOf(postInfo.getId());*/
-        id=SharedPrefsUtil.getValue(YueyingDetails.this, APPConfig.PID,"");
-        Log.d("testRun","id = "+id);
+        postId=SharedPrefsUtil.getValue(YueyingDetails.this, APPConfig.PID,"");
+        Log.d("testRun","id = "+postId);
         //访问需要的参数
         final List<OkHttpUtils.Param> list=new ArrayList<OkHttpUtils.Param>();
-        OkHttpUtils.Param idParam = new OkHttpUtils.Param("id", id);
-        list.add(idParam);
+        OkHttpUtils.Param postIdParam = new OkHttpUtils.Param("id", postId);
+        list.add(postIdParam);
 
         new Thread(new Runnable() {
 
@@ -136,7 +141,7 @@ public class YueyingDetails extends Activity {
                         message.obj = response;
                         String postData = response.toString();
                         Log.d("testRun","postData = "+postData);
-                        Log.d("testRun", "后台返回给我们的数据userDataStr=="+response.toString());
+                        Log.d("testRun", "后台返回给我们的数据collectpostData=="+response.toString());
                         SharedPrefsUtil.putValue(YueyingDetails.this, APPConfig.POSTDATA, postData);
                         postDataStr = SharedPrefsUtil.getValue(YueyingDetails.this,APPConfig.POSTDATA,"");
                         handler.sendMessage(message);
@@ -153,6 +158,61 @@ public class YueyingDetails extends Activity {
             }
         }).start();
     }
+
+    public void initMotion(){
+        details_tv_collect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                postId=SharedPrefsUtil.getValue(YueyingDetails.this, APPConfig.PID,"");
+                collecterId= String.valueOf(userInfo.getId());
+                Date date=new Date();
+                DateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                collectTime= format.format(date);
+                Log.d("testRun","postId = "+postId);
+                Log.d("testRun","collecterId = "+collecterId);
+                Log.d("testRun","collectTime = "+collectTime);
+                final List<OkHttpUtils.Param> list =new ArrayList<OkHttpUtils.Param>();
+                OkHttpUtils.Param postidParam= new OkHttpUtils.Param("postId",postId);
+                OkHttpUtils.Param collecterIdParam = new OkHttpUtils.Param("collecterId",collecterId);
+                OkHttpUtils.Param collectTimeParam = new OkHttpUtils.Param("collectTime",collectTime);
+                list.add(postidParam);
+                list.add(collecterIdParam);
+                list.add(collectTimeParam);
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //post 方式连接
+                        OkHttpUtils.post(APPConfig.addCollectByCollecterId, new OkHttpUtils.ResultCallback() {
+                            @Override
+                            public void onSuccess(Object response) {
+                                Message message = new Message();
+                                message.what = 1;
+                                message.obj = response;
+                                String result = response.toString();
+                                if (result.equals("add_success")){
+                                    Toast.makeText(YueyingDetails.this,"收藏成功！", Toast.LENGTH_SHORT).show();
+                                }else if (result.equals("hasadd")){
+                                    Toast.makeText(YueyingDetails.this,"已经收藏！",Toast.LENGTH_SHORT).show();
+                                }
+
+                            }
+
+                            @Override
+                            public void onFailure(Exception e) {
+                                Log.d("testRun", "请求失败loginActivity----new Thread(new Runnable() {------");
+                                Toast.makeText(YueyingDetails.this, "服务器连接失败，请重试！", Toast.LENGTH_SHORT).show();
+
+                            }
+                        },list);
+                    }
+                }).start();
+
+            }
+        });
+    }
+
+
     private Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
