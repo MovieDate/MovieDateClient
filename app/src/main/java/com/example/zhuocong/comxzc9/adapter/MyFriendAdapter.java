@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.example.zhuocong.comxzc9.R;
 import com.example.zhuocong.comxzc9.entity.Friend;
+import com.example.zhuocong.comxzc9.entity.FriendList;
 
 import java.util.List;
 
@@ -17,20 +18,20 @@ import java.util.List;
  */
 
 public class MyFriendAdapter extends BaseAdapter {
-    private List<Friend> friendList;
+    private List<FriendList> friendListList;
     private LayoutInflater inflater;
-    public MyFriendAdapter(List<Friend> friendList, Context context){
-        this.friendList=friendList;
+    public MyFriendAdapter(List<FriendList> friendListList, Context context){
+        this.friendListList=friendListList;
         this.inflater=LayoutInflater.from(context);
     }
     @Override
     public int getCount() {
-        return friendList==null?0:friendList.size();
+        return friendListList==null?0:friendListList.size();
     }
 
     @Override
-    public Friend getItem(int position) {
-        return friendList.get(position);
+    public FriendList getItem(int position) {
+        return friendListList.get(position);
     }
 
     @Override
@@ -42,11 +43,13 @@ public class MyFriendAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         //加载布局为一个视图
         View view = inflater.inflate(R.layout.myfriendlist, null);
-        Friend friend =  getItem(position);
+        FriendList friendList =  getItem(position);
         //在view视图中查找id为image_photo的控件
-        TextView myfriend_id= (TextView) view.findViewById(R.id.myfriend_id);
-        String id= String.valueOf(friend.getFriendId());
-        myfriend_id.setText(id);
+        TextView myfriend_name= (TextView) view.findViewById(R.id.myfriend_name);
+        TextView myfriend_friendid=(TextView)view.findViewById(R.id.myfriend_friendid);
+        myfriend_name.setText(friendList.getName());
+        String id=String.valueOf(friendList.getFriendId());
+        myfriend_friendid.setText(id);
 
         return view;
     }

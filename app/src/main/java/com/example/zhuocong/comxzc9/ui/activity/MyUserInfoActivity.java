@@ -29,6 +29,7 @@ public class MyUserInfoActivity extends Activity{
 
     private String userDataStr;
     private User userInfo;
+    private User userInfo2;
 
     private LinearLayout ll_one;
     private LinearLayout ll_two;
@@ -65,6 +66,7 @@ public class MyUserInfoActivity extends Activity{
         userDataStr = SharedPrefsUtil.getValue(MyUserInfoActivity.this,APPConfig.USERDATA,"");
         Gson gson= new Gson();
         userInfo=gson.fromJson(userDataStr,User.class);
+        Log.d("testRun","userInfo="+userInfo);
 
         img_back = (ImageView) this.findViewById(R.id.amyinfo_img_back);
         tv_updateinfo = (TextView) this.findViewById(R.id.amyinfo_tv_updateinfo);
@@ -99,6 +101,7 @@ public class MyUserInfoActivity extends Activity{
                 Intent intent = new Intent();
                 intent.setClass(MyUserInfoActivity.this,MyUserInfoUpdateActivity.class );
                 startActivity(intent);
+                finish();
 //                Toast.makeText(MyUserInfoActivity.this, "更新待完成", Toast.LENGTH_SHORT).show();
             }
         });
@@ -147,29 +150,31 @@ public class MyUserInfoActivity extends Activity{
                 case 0:
                 //Gson解析数据
                     Gson gson=new Gson();
-                    //userDataStr = msg.obj.toString();
-                    if (userDataStr.equals("nodata")) {
+                    String userDataStr2 = msg.obj.toString();
+                    if (userDataStr2.equals("nodata")) {
                         Toast.makeText(MyUserInfoActivity.this, "没有找到数据，请重试！", Toast.LENGTH_SHORT).show();
                     } else {//如果后台成功返回User数据，则显示出来，这里我只显示一部分，其他还要补充进来
-                        userInfo=gson.fromJson(userDataStr,User.class);
-                        tv_account.setText("账号："+userInfo.getPhone());
-                        tv_name.setText(userInfo.getName());
-                        tv_nickname.setText(userInfo.getNickname());
-                        tv_age.setText(userInfo.getAge()+"");
-                        if (userInfo.getGender() == 0) {
+                        userInfo2=gson.fromJson(userDataStr2,User.class);
+                        tv_account.setText("账号："+userInfo2.getPhone());
+                        tv_name.setText(userInfo2.getName());
+                        tv_nickname.setText(userInfo2.getNickname());
+                        tv_age.setText(userInfo2.getAge()+"");
+                        if (userInfo2.getGender() == 0) {
+                            Log.d("testRun","gender="+userInfo2.getGender());
                             tv_gender.setText("男");
                         }else {
+                            Log.d("testRun","gender="+userInfo2.getGender());
                             tv_gender.setText("女");
                         }
-                        tv_birthday.setText(userInfo.getBirthday());
-                        tv_xingZuo.setText(userInfo.getXingZuo());
-                        tv_height.setText(userInfo.getHeight());
-                        tv_weight.setText(userInfo.getWeight());
-                        tv_phone.setText(userInfo.getPhone());
-                        tv_address.setText(userInfo.getAddress());
-                        tv_job.setText(userInfo.getJob());
-                        tv_signature.setText(userInfo.getSignature());
-                        tv_habit.setText(userInfo.getHabit());
+                        tv_birthday.setText(userInfo2.getBirthday());
+                        tv_xingZuo.setText(userInfo2.getXingZuo());
+                        tv_height.setText(userInfo2.getHeight());
+                        tv_weight.setText(userInfo2.getWeight());
+                        tv_phone.setText(userInfo2.getPhone());
+                        tv_address.setText(userInfo2.getAddress());
+                        tv_job.setText(userInfo2.getJob());
+                        tv_signature.setText(userInfo2.getSignature());
+                        tv_habit.setText(userInfo2.getHabit());
                     }
                     break;
             }

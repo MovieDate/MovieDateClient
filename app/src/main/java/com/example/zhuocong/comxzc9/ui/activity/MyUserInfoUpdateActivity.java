@@ -32,6 +32,8 @@ import java.util.List;
 public class MyUserInfoUpdateActivity extends Activity {
     private String userDataStr;
     private User userInfo;
+    private String userDataStr2;
+    private User userInfo2;
 
     private LinearLayout ll_one;
     private LinearLayout ll_two;
@@ -262,29 +264,29 @@ public class MyUserInfoUpdateActivity extends Activity {
                 case 1:
                     //Gson解析数据
                     //Gson gson=new Gson();
-                    //userDataStr = msg.obj.toString();
-                    if (userDataStr.equals("nodata")) {
+                    userDataStr2 = msg.obj.toString();
+                    if (userDataStr2.equals("nodata")) {
                         Toast.makeText(MyUserInfoUpdateActivity.this, "没有找到数据，请重试！", Toast.LENGTH_SHORT).show();
                     } else {//如果后台成功返回User数据，则显示出来，这里我只显示一部分，其他还要补充进来
-                        userInfo=gson.fromJson(userDataStr,User.class);
-                        tv_account.setText("账号："+userInfo.getPhone());
-                        tv_name.setText(userInfo.getName());
-                        et_nickname.setText(userInfo.getNickname());
-                        et_age.setText(userInfo.getAge()+"");
-                        if (userInfo.getGender() == 0) {
+                        userInfo2=gson.fromJson(userDataStr2,User.class);
+                        tv_account.setText("账号："+userInfo2.getPhone());
+                        tv_name.setText(userInfo2.getName());
+                        et_nickname.setText(userInfo2.getNickname());
+                        et_age.setText(userInfo2.getAge()+"");
+                        if (userInfo2.getGender() == 0) {
                             tv_gender.setText("男");
                         }else {
                             tv_gender.setText("女");
                         }
-                        et_birthday.setText(userInfo.getBirthday());
-                        et_xingZuo.setText(userInfo.getXingZuo());
-                        et_height.setText(userInfo.getHeight());
-                        et_weight.setText(userInfo.getWeight());
-                        tv_phone.setText(userInfo.getPhone());
-                        et_address.setText(userInfo.getAddress());
-                        et_job.setText(userInfo.getJob());
-                        et_signature.setText(userInfo.getSignature());
-                        et_habit.setText(userInfo.getHabit());
+                        et_birthday.setText(userInfo2.getBirthday());
+                        et_xingZuo.setText(userInfo2.getXingZuo());
+                        et_height.setText(userInfo2.getHeight());
+                        et_weight.setText(userInfo2.getWeight());
+                        tv_phone.setText(userInfo2.getPhone());
+                        et_address.setText(userInfo2.getAddress());
+                        et_job.setText(userInfo2.getJob());
+                        et_signature.setText(userInfo2.getSignature());
+                        et_habit.setText(userInfo2.getHabit());
                     }
                     break;
                 case 0:
@@ -293,7 +295,6 @@ public class MyUserInfoUpdateActivity extends Activity {
                         Toast.makeText(MyUserInfoUpdateActivity.this,"修改成功！", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent();
                         intent.setClass(MyUserInfoUpdateActivity.this, MyUserInfoActivity.class);
-
                         startActivity(intent);
                         finish();
 

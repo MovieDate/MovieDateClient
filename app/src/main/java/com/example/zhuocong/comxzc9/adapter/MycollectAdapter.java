@@ -1,6 +1,7 @@
 package com.example.zhuocong.comxzc9.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,8 @@ import android.widget.TextView;
 
 import com.example.zhuocong.comxzc9.R;
 import com.example.zhuocong.comxzc9.entity.Collect;
+import com.example.zhuocong.comxzc9.entity.CollectList;
+import com.example.zhuocong.comxzc9.entity.Post;
 
 import java.util.List;
 
@@ -17,21 +20,21 @@ import java.util.List;
  */
 
 public class MycollectAdapter extends BaseAdapter {
-    private List<Collect> collectList;
+    private List<CollectList> collectListList;
     private LayoutInflater inflater;
 
-    public MycollectAdapter(List<Collect> collectList, Context context){
-        this.collectList=collectList;
+    public MycollectAdapter(List<CollectList> collectListList, Context context){
+        this.collectListList=collectListList;
         this.inflater=LayoutInflater.from(context);
     }
     @Override
     public int getCount() {
-        return collectList==null?0:collectList.size();
+        return collectListList==null?0:collectListList.size();
     }
 
     @Override
-    public Collect getItem(int position) {
-        return collectList.get(position);
+    public CollectList getItem(int position) {
+        return collectListList.get(position);
     }
 
     @Override
@@ -43,15 +46,28 @@ public class MycollectAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         //加载布局为一个视图
         View view = inflater.inflate(R.layout.collectlist, null);
-        Collect collect =  getItem(position);
+        CollectList collectList =  getItem(position);
         //在view视图中查找id为image_photo的控件
-        TextView collectlist_tv_postid = (TextView) view.findViewById(R.id.collectlist_tv_postid);
-        TextView collectlist_tv_personid = (TextView) view.findViewById(R.id.collectlist_tv_personid);
+        TextView collectlist_tv_nickname = (TextView) view.findViewById(R.id.collectlist_tv_nickname);
+        TextView collectlist_tv_movieName = (TextView) view.findViewById(R.id.collectlist_tv_movieName);
+        TextView collectlist_tv_site = (TextView) view.findViewById(R.id.collectlist_tv_site);
+        TextView collectlist_tv_details = (TextView) view.findViewById(R.id.collectlist_tv_details);
         TextView collectlist_tv_collecttime = (TextView) view.findViewById(R.id.collectlist_tv_collecttime);
-        String id= String.valueOf(collect.getId());
+        TextView collectlist_tv_postid = (TextView) view.findViewById(R.id.collectlist_tv_postid);
+        String id= String.valueOf(collectList.getPostId());
+
         collectlist_tv_postid.setText(id);
-        collectlist_tv_personid.setText("收藏人："+collect.getCollecterId());
-        collectlist_tv_collecttime.setText("时间："+collect.getCollectTime());
+        if (collectList.getNickname().equals("未填写")){
+            collectlist_tv_nickname.setText(collectList.getName());
+            Log.d("testRun","Nickname"+collectList.getName());
+        }else{
+            collectlist_tv_nickname.setText(collectList.getNickname());
+            Log.d("testRun","Nickname"+collectList.getNickname());
+        }
+        collectlist_tv_movieName.setText("约影影片:\n"+collectList.getMovieName());
+        collectlist_tv_site.setText(collectList.getSite());
+        collectlist_tv_details.setText(collectList.getDetails());
+        collectlist_tv_collecttime.setText("收藏于:"+collectList.getCollectTime());
 
         return view;
     }

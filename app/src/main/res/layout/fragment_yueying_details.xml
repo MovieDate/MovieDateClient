@@ -219,10 +219,16 @@
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:layout_marginLeft="20dp"
+                    android:id="@+id/details_tv_check"
+                    android:textSize="15dp"
+                    android:text="查看报名情况" />
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="20dp"
                     android:id="@+id/details_tv_apply"
                     android:textSize="15dp"
-                    android:text="立即报名"
-                    />
+                    android:text="立即报名" />
                 <TextView
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
@@ -230,6 +236,11 @@
                     android:id="@+id/details_tv_review"
                     android:textSize="15dp"
                     android:text="评论"
+                    />
+                <EditText
+                    android:id="@+id/details_et_review"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
                     />
                 <TextView
                     android:layout_height="wrap_content"

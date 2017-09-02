@@ -6,10 +6,11 @@ package com.example.zhuocong.comxzc9.commom;
 public class APPConfig {
 
 //    private static String base_url="http://localhost:8080/";
-    private static String base_url="http://192.168.0.106:8080/";
+    private static String base_url="http://192.168.1.100:8080/";
 
     public static String login = base_url + "/userController/loginByPhonePsw";
     public static String findUserByPhone = base_url + "/userController/findUserByPhone";
+    public static String findUserById = base_url + "/userController/findUserById";
     public static String register=base_url+"/userController/addUserByPhonePsw";
     public static String modify=base_url+"/userController/updateUser";
     public static String updatePhone=base_url+"/userController/updatePhoneById";
@@ -19,7 +20,12 @@ public class APPConfig {
     public static String post=base_url+"/postController/addPostByPostPersonId";
     public static String findPostByid=base_url+"/postController/findPostByid";
     public static String addCollectByCollecterId=base_url+"/collectController/addCollectByCollecterId";
-    public static String findCollectByCollecterId=base_url+"/collectController/findCollectByCollecterId";
+    public static String findCollectByCollectPostId=base_url+"/collectController/findCollectByCollectPostId";//验证收藏
+    public static String findCollectByCollecterId=base_url+"/collectController/findCollectByCollecterId";//我的收藏
+    public static String findCollectByCollecterId2=base_url+"/collectController/findCollectByCollecterId2";
+    public static String findFriendByMyId=base_url+"/friendtController/findFriendByMyId";//我的好友列表
+    public static String addPersonByPostId=base_url+"/personController/addPersonByPostId";
+    public static String findPersonByPostId=base_url+"/personController/findPersonByPostId";
 
 
     public static String USERDATA = "userData";//获取当前用户的key

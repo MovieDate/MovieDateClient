@@ -19,6 +19,7 @@ import com.example.zhuocong.comxzc9.R;
 import com.example.zhuocong.comxzc9.adapter.YueyingFragmentAdapter;
 import com.example.zhuocong.comxzc9.commom.APPConfig;
 import com.example.zhuocong.comxzc9.entity.Post;
+import com.example.zhuocong.comxzc9.entity.PostList;
 import com.example.zhuocong.comxzc9.ui.activity.LoginActivity;
 import com.example.zhuocong.comxzc9.ui.activity.RegisterActivity;
 import com.example.zhuocong.comxzc9.ui.activity.YueyingDetails;
@@ -41,6 +42,7 @@ public class YueYingFragment extends BaseFragment{
     private ListView yueyinglistview;
 
     private List<Post> postList;
+    private List<PostList> postListList;
     private YueyingFragmentAdapter yueyingFragmentAdapter;
     Gson gson = new Gson();
 
@@ -63,9 +65,10 @@ public class YueYingFragment extends BaseFragment{
                 TextView tv_id=(TextView)view.findViewById(R.id.yueyinglist_tv_id);
                 String id=tv_id.getText().toString().trim();
                 Log.d("testRun","id = "+id);
-                SharedPrefsUtil.putValue(getActivity(), APPConfig.PID,id);
+                /*SharedPrefsUtil.putValue(getActivity(), APPConfig.PID,id);*/
                 Intent intent=new Intent();
                 intent.setClass(getActivity(), YueyingDetails.class);
+                intent.putExtra("postId",id);
                 startActivity(intent);
             }
         });
@@ -84,8 +87,8 @@ public class YueYingFragment extends BaseFragment{
                         Message message = new Message();
                         message.what = 0;
                         message.obj = response;
-                        String postDateStr=response.toString();
-                        Log.d("postDateStr","post"+postDateStr);
+                        String postlistDateStr=response.toString();
+                        Log.d("postlistDateStr","post"+postlistDateStr);
                         handler.sendMessage(message);
 
                     }
@@ -105,16 +108,17 @@ public class YueYingFragment extends BaseFragment{
     private Handler handler= new Handler(){
         @Override
         public void handleMessage(Message msg){
-            String postDateStr=msg.obj.toString();
-            if (postDateStr.equals("nodata")) {
+            String postlistDateStr=msg.obj.toString();
+            Log.d("postlistDateStr", "postlistDateStr=" + postlistDateStr);
+            if (postlistDateStr.equals("nodata")) {
                 Toast.makeText(getActivity(), "还没有用户发起约影", Toast.LENGTH_SHORT).show();
             } else {
                 //gson解析数据时，
                 try {
-                    postList = gson.fromJson(postDateStr, new TypeToken<List<Post>>() {}.getType());
-                    if (postList != null && postList.size() > 0) {
-                        Log.d("postDateStr", "postList=" + postList);
-                        yueyingFragmentAdapter = new YueyingFragmentAdapter(postList, getActivity());
+                    postListList = gson.fromJson(postlistDateStr, new TypeToken<List<PostList>>() {}.getType());
+                    if (postListList != null && postListList.size() > 0) {
+                        Log.d("postListList", "postListList=" + postListList);
+                        yueyingFragmentAdapter = new YueyingFragmentAdapter(postListList, getActivity());
                         yueyinglistview.setAdapter(yueyingFragmentAdapter);
                     } else {
 
@@ -124,7 +128,6 @@ public class YueYingFragment extends BaseFragment{
                     Log.e("JsonSyntaxException",""+e1.getMessage());
                     e1.printStackTrace();
                 }
-
             }
 
 

@@ -37,6 +37,8 @@ public class YueyingDetails extends Activity {
 
     private String postDataStr;
     private Post postInfo;
+    private Post postInfo2;
+    private User userInfo2;
     private String userDataStr;
     private User userInfo;
 
@@ -55,10 +57,13 @@ public class YueyingDetails extends Activity {
     private TextView details_tv_collect;
     private ListView reviewlistview;
     private TextView review_details;
+    private TextView details_tv_check;
 
     private String postId;
     private String collecterId;
     private String collectTime;
+    private String postPersonId;
+    Gson gson= new Gson();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,11 +75,10 @@ public class YueyingDetails extends Activity {
     }
 
     public void initView(){
+        //读取数据
         userDataStr = SharedPrefsUtil.getValue(YueyingDetails.this,APPConfig.USERDATA,"");
-        Gson gson= new Gson();
         userInfo=gson.fromJson(userDataStr,User.class);
-
-
+        //初始化控件
         details_img_back=(ImageView)this.findViewById(R.id.details_img_back);
         details_ll_myuser=(LinearLayout)this.findViewById(R.id.details_ll_myuser);
         details_tv_nickname=(TextView)this.findViewById(R.id.details_tv_nickname);
@@ -90,7 +94,9 @@ public class YueyingDetails extends Activity {
         details_tv_collect=(TextView)this.findViewById(R.id.details_tv_collect);
         reviewlistview=(ListView)this.findViewById(R.id.reviewlistview);
         review_details=(TextView)this.findViewById(R.id.review_details);
+        details_tv_check=(TextView)this.findViewById(R.id.details_tv_check);
 
+        //设置点击事件
         details_img_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -102,7 +108,13 @@ public class YueyingDetails extends Activity {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent();
-                intent.setClass(YueyingDetails.this,MyUserInfoActivity.class);
+                intent.setClass(YueyingDetails.this,AllPersonInfo.class);
+                postDataStr = SharedPrefsUtil.getValue(YueyingDetails.this,APPConfig.POSTDATA,"");
+                Gson gson=new Gson();
+                postInfo=gson.fromJson(postDataStr,Post.class);
+                postPersonId = String.valueOf(postInfo.getPostPersonId());
+                Log.d("testRun","postPersonId="+postPersonId);
+                intent.putExtra("id",postPersonId);
                 startActivity(intent);
             }
         });
@@ -115,13 +127,24 @@ public class YueyingDetails extends Activity {
             }
         });
 
-
+        details_tv_check.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent();
+                intent.setClass(YueyingDetails.this,ApplyViewActivity.class);
+                String postId2=postId;
+                Log.d("testRun","postId2 = "+postId2);
+                intent.putExtra("postId2",postId2);
+                startActivity(intent);
+                finish();
+            }
+        });
 
     }
 
     private void initData(){
         /*id= String.valueOf(postInfo.getId());*/
-        postId=SharedPrefsUtil.getValue(YueyingDetails.this, APPConfig.PID,"");
+        postId=this.getIntent().getStringExtra("postId");
         Log.d("testRun","id = "+postId);
         //访问需要的参数
         final List<OkHttpUtils.Param> list=new ArrayList<OkHttpUtils.Param>();
@@ -163,7 +186,7 @@ public class YueyingDetails extends Activity {
         details_tv_collect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                postId=SharedPrefsUtil.getValue(YueyingDetails.this, APPConfig.PID,"");
+
                 collecterId= String.valueOf(userInfo.getId());
                 Date date=new Date();
                 DateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -210,8 +233,10 @@ public class YueyingDetails extends Activity {
 
             }
         });
-    }
 
+
+
+    }
 
     private Handler handler=new Handler(){
         @Override
@@ -220,28 +245,141 @@ public class YueyingDetails extends Activity {
                 case 0:
                     //Gson解析数据
                     Gson gson=new Gson();
-                    if (postDataStr.equals("nodata")) {
+                    String postDataStr2=msg.obj.toString();
+                    Log.d("testRun","postDataStr2"+postDataStr2);
+                    if (postDataStr2.equals("nodata")) {
                         Toast.makeText(YueyingDetails.this, "没有找到数据，请重试！", Toast.LENGTH_SHORT).show();
-                    } else {//如果后台成功返回User数据，则显示出来，这里我只显示一部分，其他还要补充进来
-                        details_tv_nickname.setText(userInfo.getNickname());
-                        postInfo=gson.fromJson(postDataStr,Post.class);
-                        details_tv_posttime.setText("发布于"+postInfo.getPostTime());
-                        details_tv_moviename.setText(postInfo.getMovieName());
-                        details_tv_site.setText(postInfo.getSite());
-                        details_tv_movietime.setText(postInfo.getMovieTime());
-                        if (postInfo.getSex() == 0) {
+                    } else {
+                        postInfo2=gson.fromJson(postDataStr2,Post.class);
+                        details_tv_posttime.setText("发布于"+postInfo2.getPostTime());
+                        details_tv_moviename.setText(postInfo2.getMovieName());
+                        details_tv_site.setText(postInfo2.getSite());
+                        details_tv_movietime.setText(postInfo2.getMovieTime());
+                        if (postInfo2.getSex() == 0) {
                             details_tv_sex.setText("男");
-                        }else if (postInfo.getSex() == 1){
+                        }else if (postInfo2.getSex() == 1){
                             details_tv_sex.setText("女");
-                        }else if (postInfo.getSex()==2){
+                        }else if (postInfo2.getSex()==2){
                             details_tv_sex.setText("不限");
                         }
-                        if (postInfo.getMovieType() == 0) {
+                        if (postInfo2.getMovieType() == 0) {
                             details_tv_movietype.setText("两人单独约影");
                         }else {
                             details_tv_movietype.setText("多人群体约影");
                         }
-                        details_tv_details.setText(postInfo.getDetails());
+                        details_tv_details.setText(postInfo2.getDetails());
+                        postPersonId = String.valueOf(postInfo2.getPostPersonId());
+                        Log.d("testRun","postPersonId="+postPersonId);
+                        //访问需要的参数
+                        final List<OkHttpUtils.Param> list=new ArrayList<OkHttpUtils.Param>();
+                        OkHttpUtils.Param postPersonIdParam = new OkHttpUtils.Param("id", postPersonId);
+                        list.add(postPersonIdParam);
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                //post
+                                OkHttpUtils.post(APPConfig.findUserById, new OkHttpUtils.ResultCallback() {
+                                    @Override
+                                    public void onSuccess(Object response) {
+                                        Message message = new Message();
+                                        message.what = 2;
+                                        message.obj = response;
+                                        String  userDataStr2= response.toString();
+                                        handler.sendMessage(message);
+                                        Log.d("testRun","userDataStr2"+userDataStr2);
+                                        Gson gson1 = new Gson();
+                                        userInfo2 = gson1.fromJson(userDataStr2, User.class);
+                                        if (userInfo2.getNickname().equals("未填写")){
+                                            details_tv_nickname.setText(userInfo2.getName());
+                                            Log.d("testRun","Nickname"+userInfo2.getName());
+                                        }else{
+                                            details_tv_nickname.setText(userInfo2.getNickname());
+                                            Log.d("testRun","Nickname"+userInfo2.getNickname());
+                                        }
+
+
+
+                                    }
+
+                                    @Override
+                                    public void onFailure(Exception e) {
+                                        Log.d("testRun", "请求失败loginActivity----new Thread(new Runnable() {------");
+                                        Toast.makeText(YueyingDetails.this, "服务器连接失败，请重试！", Toast.LENGTH_SHORT).show();
+                                    }
+                                },list);
+                            }
+                        }).start();
+                        //查看用户姓名结束
+
+                        //设置立即报名按钮状态
+                        if((userInfo.getId())==(postInfo2.getPostPersonId())){
+                            details_tv_apply.setVisibility(View.GONE);
+                        }else {
+                            details_tv_apply.setVisibility(View.VISIBLE);
+                        }
+
+                        //设置查看报名状态按钮状态
+                        if (postInfo2.getMovieType()==0&&((userInfo.getId())!=(postInfo2.getPostPersonId()))){
+                            details_tv_check.setVisibility(View.GONE);
+                        }else {
+                            details_tv_check.setVisibility(View.VISIBLE);
+                        }
+
+                        details_tv_apply.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                String postId= String.valueOf(postInfo2.getId());
+                                String startPersonId= String.valueOf(postInfo2.getPostPersonId());
+                                String byPersonId= String.valueOf(userInfo.getId());
+                                Log.d("testRun","postId="+postId+"startPersonId="+startPersonId+"byPersonId="+byPersonId);
+
+                                final List<OkHttpUtils.Param> list=new ArrayList<OkHttpUtils.Param>();
+                                OkHttpUtils.Param postIdParam= new OkHttpUtils.Param("postId",postId);
+                                OkHttpUtils.Param startPersonIdParam=new OkHttpUtils.Param("startPersonId",startPersonId);
+                                OkHttpUtils.Param byPersonIdParam =new OkHttpUtils.Param("byPersonId",byPersonId);
+                                list.add(postIdParam);
+                                list.add(startPersonIdParam);
+                                list.add(byPersonIdParam);
+                                if (postInfo2.getSex()==userInfo.getGender()||postInfo2.getSex()==2){
+                                    Log.d("testRun","对象："+postInfo2.getSex()+"性别："+userInfo.getGender());
+                                    new Thread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            //post
+                                            OkHttpUtils.post(APPConfig.addPersonByPostId, new OkHttpUtils.ResultCallback() {
+                                                @Override
+                                                public void onSuccess(Object response) {
+                                                    String result =response.toString();
+                                                    Log.d("testRun","result="+result);
+                                                    if (result.equals("add_success")){
+                                                        Log.d("testRun","apply");
+                                                        Toast.makeText(YueyingDetails.this,"报名成功",Toast.LENGTH_SHORT).show();
+                                                    }else if (result.equals("ending")){
+                                                        Log.d("testRun","ending");
+                                                        Toast.makeText(YueyingDetails.this,"报名人数已满，请查看其它约影帖子",Toast.LENGTH_SHORT).show();
+
+                                                    }else if(result.equals("hasjoined")){
+                                                        Toast.makeText(YueyingDetails.this,"您已经报名了，具体的请看报名情况",Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void onFailure(Exception e) {
+                                                    Log.d("testRun", "网络请求失败------");
+                                                    Toast.makeText(YueyingDetails.this, "服务器连接失败，请重试！", Toast.LENGTH_SHORT).show();
+
+                                                }
+                                            },list);
+                                        }
+                                    }).start();
+                                }else {
+                                    Toast.makeText(YueyingDetails.this,"性别不符合该帖约影要求，请查看其它约影帖子",Toast.LENGTH_SHORT).show();
+                                }
+
+                            }
+                        });
+
+
                     }
                     break;
             }

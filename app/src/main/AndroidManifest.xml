@@ -46,6 +46,10 @@
 
         <activity android:name=".ui.activity.XiaoxiMyFriend"></activity>
 
+        <activity android:name=".ui.activity.AllPersonInfo"></activity>
+
+        <activity android:name=".ui.activity.ApplyViewActivity"></activity>
+
     </application>
 
 
