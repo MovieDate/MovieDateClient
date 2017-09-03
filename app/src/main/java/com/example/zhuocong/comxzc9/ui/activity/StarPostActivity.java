@@ -160,7 +160,6 @@ public class StarPostActivity extends Activity {
                                     message.obj = response;
                                     String result = response.toString();
                                     if (result.equals("add_success")){
-                                        Toast.makeText(StarPostActivity.this,"发布成功！", Toast.LENGTH_SHORT).show();
                                         handler.sendMessage(message);
                                     }else {
                                         Toast.makeText(StarPostActivity.this,"发布失败！",Toast.LENGTH_SHORT).show();

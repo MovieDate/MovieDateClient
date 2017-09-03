@@ -88,7 +88,7 @@ public class YueYingFragment extends BaseFragment{
                         message.what = 0;
                         message.obj = response;
                         String postlistDateStr=response.toString();
-                        Log.d("postlistDateStr","post"+postlistDateStr);
+                        Log.d("postlistDateStr","post2"+postlistDateStr);
                         handler.sendMessage(message);
 
                     }
@@ -109,7 +109,7 @@ public class YueYingFragment extends BaseFragment{
         @Override
         public void handleMessage(Message msg){
             String postlistDateStr=msg.obj.toString();
-            Log.d("postlistDateStr", "postlistDateStr=" + postlistDateStr);
+            Log.d("postlistDateStr", "postlistDateStr1=" + postlistDateStr);
             if (postlistDateStr.equals("nodata")) {
                 Toast.makeText(getActivity(), "还没有用户发起约影", Toast.LENGTH_SHORT).show();
             } else {

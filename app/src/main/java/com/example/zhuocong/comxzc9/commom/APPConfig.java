@@ -26,6 +26,9 @@ public class APPConfig {
     public static String findFriendByMyId=base_url+"/friendtController/findFriendByMyId";//我的好友列表
     public static String addPersonByPostId=base_url+"/personController/addPersonByPostId";
     public static String findPersonByPostId=base_url+"/personController/findPersonByPostId";
+    public static String findReviewByPostId=base_url+"/reviewController/findReviewByPostId";
+    public static String reviewDetailsParam=base_url+"/reviewController/addUserReviewByPostId";
+    public static String findposttab=base_url+"/postController/findposttab";
 
 
     public static String USERDATA = "userData";//获取当前用户的key

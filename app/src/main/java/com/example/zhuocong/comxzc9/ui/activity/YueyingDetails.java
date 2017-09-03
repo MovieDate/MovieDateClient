@@ -8,20 +8,30 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.zhuocong.comxzc9.R;
+import com.example.zhuocong.comxzc9.adapter.ReviewAdapter;
 import com.example.zhuocong.comxzc9.commom.APPConfig;
 import com.example.zhuocong.comxzc9.entity.Post;
+import com.example.zhuocong.comxzc9.entity.PostList;
+import com.example.zhuocong.comxzc9.entity.Review;
+import com.example.zhuocong.comxzc9.entity.ReviewList;
 import com.example.zhuocong.comxzc9.entity.User;
 import com.example.zhuocong.comxzc9.utils.OkHttpUtils;
 import com.example.zhuocong.comxzc9.utils.SharedPrefsUtil;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -41,6 +51,8 @@ public class YueyingDetails extends Activity {
     private User userInfo2;
     private String userDataStr;
     private User userInfo;
+    private List<ReviewList> reviewListList;
+    private ReviewAdapter reviewAdapter;
 
     private ImageView details_img_back;
     private LinearLayout details_ll_myuser;
@@ -58,12 +70,19 @@ public class YueyingDetails extends Activity {
     private ListView reviewlistview;
     private TextView review_details;
     private TextView details_tv_check;
+    private EditText details_et_review;
+    private TextView details_tv_finish;
 
     private String postId;
     private String collecterId;
     private String collectTime;
     private String postPersonId;
     Gson gson= new Gson();
+
+    private EditText et_sendDicscuss;
+    private TextView tv_send;
+    private TextView tv_unsend;
+    private LinearLayout ll_sendDiscuss;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +91,8 @@ public class YueyingDetails extends Activity {
         initView();
         initData();
         initMotion();
+        initReview();
+        sendReview();
     }
 
     public void initView(){
@@ -95,8 +116,26 @@ public class YueyingDetails extends Activity {
         reviewlistview=(ListView)this.findViewById(R.id.reviewlistview);
         review_details=(TextView)this.findViewById(R.id.review_details);
         details_tv_check=(TextView)this.findViewById(R.id.details_tv_check);
+        et_sendDicscuss = (EditText) findViewById(R.id.et_activity_shareinfo_discusscontent);
+        tv_send = (TextView) findViewById(R.id.bt_activity_shareinfo_send);
+        tv_unsend = (TextView) findViewById(R.id.bt_activity_shareinfo_unsend);
+        ll_sendDiscuss = (LinearLayout) findViewById(R.id.ll_activity_shareinfo_senddiscuss);
+        details_tv_finish=(TextView)findViewById(R.id.details_tv_finish);
 
-        //设置点击事件
+        et_sendDicscuss.setVisibility(View.GONE);
+        ll_sendDiscuss.setVisibility(View.GONE);
+        tv_send.setVisibility(View.GONE);
+        tv_unsend.setVisibility(View.GONE);
+
+        //设置每个评论的点击事件
+        reviewlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+            }
+        });
+
+        //设置返回键的点击事件
         details_img_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -104,6 +143,7 @@ public class YueyingDetails extends Activity {
             }
         });
 
+        //设置查看用户信息的点击事件
         details_ll_myuser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -119,14 +159,16 @@ public class YueyingDetails extends Activity {
             }
         });
 
+        //设置按钮评论的点击事件
         details_tv_review.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(YueyingDetails.this,"待更新",Toast.LENGTH_SHORT).show();
+                et_sendDicscuss.setVisibility( View.VISIBLE);
 
             }
         });
 
+        //设置查看报名情况的点击事件
         details_tv_check.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -137,6 +179,39 @@ public class YueyingDetails extends Activity {
                 intent.putExtra("postId2",postId2);
                 startActivity(intent);
                 finish();
+            }
+        });
+
+        //评论时取消按键
+        tv_unsend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ll_sendDiscuss.setVisibility(View.GONE);
+                tv_unsend.setVisibility(View.GONE);
+                tv_send.setVisibility(View.GONE);
+                et_sendDicscuss.setVisibility(View.GONE);
+            }
+        });
+
+        //评论框点击事件
+        et_sendDicscuss.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus){//没被点击时候，这些控件被隐藏
+                    Log.d("test","未点击");
+                    et_sendDicscuss.setVisibility(View.GONE);
+                    ll_sendDiscuss.setVisibility(View.GONE);
+                    tv_send.setVisibility(View.GONE);
+                    tv_unsend.setVisibility(View.GONE);
+                }else {
+                    Log.d("test","yi点击");
+                    //被点击的时候。显示这些控件
+                    et_sendDicscuss.setVisibility(View.VISIBLE);
+                    ll_sendDiscuss.setVisibility(View.VISIBLE);
+                    tv_send.setVisibility(View.VISIBLE);
+                    tv_unsend.setVisibility(View.VISIBLE);
+                }
+
             }
         });
 
@@ -182,11 +257,11 @@ public class YueyingDetails extends Activity {
         }).start();
     }
 
+    //收藏功能
     public void initMotion(){
         details_tv_collect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 collecterId= String.valueOf(userInfo.getId());
                 Date date=new Date();
                 DateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -209,9 +284,6 @@ public class YueyingDetails extends Activity {
                         OkHttpUtils.post(APPConfig.addCollectByCollecterId, new OkHttpUtils.ResultCallback() {
                             @Override
                             public void onSuccess(Object response) {
-                                Message message = new Message();
-                                message.what = 1;
-                                message.obj = response;
                                 String result = response.toString();
                                 if (result.equals("add_success")){
                                     Toast.makeText(YueyingDetails.this,"收藏成功！", Toast.LENGTH_SHORT).show();
@@ -235,6 +307,90 @@ public class YueyingDetails extends Activity {
         });
 
 
+    }
+
+    //查看该帖子的所有评论
+    public void initReview(){
+        Log.d("testRun","后台postId2="+postId);
+        final List<OkHttpUtils.Param> list=new ArrayList<OkHttpUtils.Param>();
+        OkHttpUtils.Param postParam=new OkHttpUtils.Param("postId",postId);
+        list.add(postParam);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //post
+                OkHttpUtils.post(APPConfig.findReviewByPostId, new OkHttpUtils.ResultCallback() {
+                    @Override
+                    public void onSuccess(Object response) {
+                        Message message = new Message();
+                        message.what = 1;
+                        message.obj = response;
+                        String reviewDataStr=response.toString();
+                        Log.d("testRun","后台给的数据reviewDataStr="+reviewDataStr);
+                        handler.sendMessage(message);
+                    }
+
+                    @Override
+                    public void onFailure(Exception e) {
+                        Log.d("testRun", "请求失败loginActivity----new Thread(new Runnable() {------");
+                        Toast.makeText(YueyingDetails.this, "服务器连接失败，请重试！", Toast.LENGTH_SHORT).show();
+                    }
+                },list);
+            }
+        }).start();
+    }
+
+    //发表评论功能
+    public void sendReview(){
+        tv_send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String postPersonId= String.valueOf(userInfo.getId());
+                String reviewDetails= et_sendDicscuss.getText().toString().trim();
+                final List<OkHttpUtils.Param> list=new ArrayList<OkHttpUtils.Param>();
+                OkHttpUtils.Param postIdParam =new OkHttpUtils.Param("postId",postId);
+                OkHttpUtils.Param postPersonIdParam =new OkHttpUtils.Param("postPersonId",postPersonId);
+                OkHttpUtils.Param reviewDetailsParam=new OkHttpUtils.Param("reviewDetails",reviewDetails);
+                list.add(postIdParam);
+                list.add(postPersonIdParam);
+                list.add(reviewDetailsParam);
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //POST连接
+                        OkHttpUtils.post(APPConfig.reviewDetailsParam, new OkHttpUtils.ResultCallback() {
+                            @Override
+                            public void onSuccess(Object response) {
+                                String result=response.toString();
+                                Log.d("test","result="+result);
+                                if (result.equals("add_success")){
+                                    Toast.makeText(YueyingDetails.this,"评论成功！",Toast.LENGTH_SHORT).show();
+                                    et_sendDicscuss.setVisibility(View.GONE);
+                                    ll_sendDiscuss.setVisibility(View.GONE);
+                                    tv_send.setVisibility(View.GONE);
+                                    tv_unsend.setVisibility(View.GONE);
+                                    initReview();
+                                    /*Intent intent=new Intent();
+                                    intent.setClass(YueyingDetails.this,YueyingDetails.class);
+                                    startActivity(intent);*/
+
+                                }else {
+                                    Toast.makeText(YueyingDetails.this,"评论失败，请稍后再试！",Toast.LENGTH_SHORT).show();
+                                }
+
+                            }
+
+                            @Override
+                            public void onFailure(Exception e) {
+                                Log.d("testRun", "请求失败loginActivity----new Thread(new Runnable() {------");
+                                Toast.makeText(YueyingDetails.this, "服务器连接失败，请重试！", Toast.LENGTH_SHORT).show();
+                            }
+                        },list);
+                    }
+                }).start();
+            }
+        });
 
     }
 
@@ -311,12 +467,7 @@ public class YueyingDetails extends Activity {
                         }).start();
                         //查看用户姓名结束
 
-                        //设置立即报名按钮状态
-                        if((userInfo.getId())==(postInfo2.getPostPersonId())){
-                            details_tv_apply.setVisibility(View.GONE);
-                        }else {
-                            details_tv_apply.setVisibility(View.VISIBLE);
-                        }
+
 
                         //设置查看报名状态按钮状态
                         if (postInfo2.getMovieType()==0&&((userInfo.getId())!=(postInfo2.getPostPersonId()))){
@@ -328,20 +479,24 @@ public class YueyingDetails extends Activity {
                         details_tv_apply.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                String postId= String.valueOf(postInfo2.getId());
-                                String startPersonId= String.valueOf(postInfo2.getPostPersonId());
-                                String byPersonId= String.valueOf(userInfo.getId());
-                                Log.d("testRun","postId="+postId+"startPersonId="+startPersonId+"byPersonId="+byPersonId);
+                                //设置立即报名按钮状态
+                                if ((userInfo.getId()) == (postInfo2.getPostPersonId())) {
+                                    Toast.makeText(YueyingDetails.this, "禁止本人报名自己发布的约影", Toast.LENGTH_SHORT).show();
+                                } else {
+                                String postId = String.valueOf(postInfo2.getId());
+                                String startPersonId = String.valueOf(postInfo2.getPostPersonId());
+                                String byPersonId = String.valueOf(userInfo.getId());
+                                Log.d("testRun", "postId=" + postId + "startPersonId=" + startPersonId + "byPersonId=" + byPersonId);
 
-                                final List<OkHttpUtils.Param> list=new ArrayList<OkHttpUtils.Param>();
-                                OkHttpUtils.Param postIdParam= new OkHttpUtils.Param("postId",postId);
-                                OkHttpUtils.Param startPersonIdParam=new OkHttpUtils.Param("startPersonId",startPersonId);
-                                OkHttpUtils.Param byPersonIdParam =new OkHttpUtils.Param("byPersonId",byPersonId);
+                                final List<OkHttpUtils.Param> list = new ArrayList<OkHttpUtils.Param>();
+                                OkHttpUtils.Param postIdParam = new OkHttpUtils.Param("postId", postId);
+                                OkHttpUtils.Param startPersonIdParam = new OkHttpUtils.Param("startPersonId", startPersonId);
+                                OkHttpUtils.Param byPersonIdParam = new OkHttpUtils.Param("byPersonId", byPersonId);
                                 list.add(postIdParam);
                                 list.add(startPersonIdParam);
                                 list.add(byPersonIdParam);
-                                if (postInfo2.getSex()==userInfo.getGender()||postInfo2.getSex()==2){
-                                    Log.d("testRun","对象："+postInfo2.getSex()+"性别："+userInfo.getGender());
+                                if (postInfo2.getSex() == userInfo.getGender() || postInfo2.getSex() == 2) {
+                                    Log.d("testRun", "对象：" + postInfo2.getSex() + "性别：" + userInfo.getGender());
                                     new Thread(new Runnable() {
                                         @Override
                                         public void run() {
@@ -349,17 +504,17 @@ public class YueyingDetails extends Activity {
                                             OkHttpUtils.post(APPConfig.addPersonByPostId, new OkHttpUtils.ResultCallback() {
                                                 @Override
                                                 public void onSuccess(Object response) {
-                                                    String result =response.toString();
-                                                    Log.d("testRun","result="+result);
-                                                    if (result.equals("add_success")){
-                                                        Log.d("testRun","apply");
-                                                        Toast.makeText(YueyingDetails.this,"报名成功",Toast.LENGTH_SHORT).show();
-                                                    }else if (result.equals("ending")){
-                                                        Log.d("testRun","ending");
-                                                        Toast.makeText(YueyingDetails.this,"报名人数已满，请查看其它约影帖子",Toast.LENGTH_SHORT).show();
+                                                    String result = response.toString();
+                                                    Log.d("testRun", "result=" + result);
+                                                    if (result.equals("add_success")) {
+                                                        Log.d("testRun", "apply");
+                                                        Toast.makeText(YueyingDetails.this, "报名成功", Toast.LENGTH_SHORT).show();
+                                                    } else if (result.equals("ending")) {
+                                                        Log.d("testRun", "ending");
+                                                        Toast.makeText(YueyingDetails.this, "报名人数已满，请查看其它约影帖子", Toast.LENGTH_SHORT).show();
 
-                                                    }else if(result.equals("hasjoined")){
-                                                        Toast.makeText(YueyingDetails.this,"您已经报名了，具体的请看报名情况",Toast.LENGTH_SHORT).show();
+                                                    } else if (result.equals("hasjoined")) {
+                                                        Toast.makeText(YueyingDetails.this, "您已经报名了，具体的请看报名情况", Toast.LENGTH_SHORT).show();
                                                     }
                                                 }
 
@@ -369,16 +524,42 @@ public class YueyingDetails extends Activity {
                                                     Toast.makeText(YueyingDetails.this, "服务器连接失败，请重试！", Toast.LENGTH_SHORT).show();
 
                                                 }
-                                            },list);
+                                            }, list);
                                         }
                                     }).start();
-                                }else {
-                                    Toast.makeText(YueyingDetails.this,"性别不符合该帖约影要求，请查看其它约影帖子",Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(YueyingDetails.this, "性别不符合该帖约影要求，请查看其它约影帖子", Toast.LENGTH_SHORT).show();
                                 }
-
+                            }
                             }
                         });
 
+
+                    }
+                    break;
+                case 1:
+                    String reviewDataStr=msg.obj.toString();
+                    Log.d("testRun","reviewDataStr="+reviewDataStr);
+                    if (reviewDataStr.equals("nodata")){
+                        Toast.makeText(YueyingDetails.this, "还没有用户评论", Toast.LENGTH_SHORT).show();
+                    }else {
+                        try {
+                            Gson gson1=new Gson();
+                            reviewListList=gson1.fromJson(reviewDataStr,new TypeToken<List<ReviewList>>() {}.getType());
+                            if (reviewListList!=null&&reviewListList.size()>0){
+                                Log.d("reviewListList", "reviewListList333=" + reviewListList);
+                                reviewAdapter=new ReviewAdapter(reviewListList,YueyingDetails.this);
+                                reviewlistview.setAdapter(reviewAdapter);
+                                setListViewHeight(reviewlistview);/* android:focusableInTouchMode="true" 设置该属性即可使跳转页面置顶显示*/
+
+                            }else {
+
+                            }
+                        }catch (JsonSyntaxException e1) {
+                            Toast.makeText(YueyingDetails.this, "内部数据解析异常", Toast.LENGTH_SHORT).show();
+                            Log.e("JsonSyntaxException",""+e1.getMessage());
+                            e1.printStackTrace();
+                        }
 
                     }
                     break;
@@ -386,6 +567,30 @@ public class YueyingDetails extends Activity {
         }
 
     };
+
+    /**
+     * 重新计算ListView的高度，解决ScrollView和ListView两个View都有滚动的效果，在嵌套使用时起冲突的问题
+     * @param listView
+     */
+    private void setListViewHeight(ListView listView) {
+//        DisplayMetrics metrics = new DisplayMetrics();
+//        float dpToCm = (metrics.density * 2.54f *133*shareList2.size())/ metrics.xdpi;
+        // 获取ListView对应的Adapter
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null) {
+            return;
+        }
+        int totalHeight = 0;
+        for (int i = 0, len = listAdapter.getCount(); i < len; i++) { // listAdapter.getCount()返回数据项的数目
+            View listItem = listAdapter.getView(i, null, listView);
+            listItem.measure(0, 0); // 计算子项View 的宽高
+            totalHeight += listItem.getMeasuredHeight(); // 统计所有子项的总高度
+        }
+        totalHeight+=20;
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        listView.setLayoutParams(params);
+    }
 
 
 }

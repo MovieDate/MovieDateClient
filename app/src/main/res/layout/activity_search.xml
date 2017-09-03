@@ -39,23 +39,30 @@
 
     <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="40dp">
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="100dp"
-        android:layout_height="40dp"
-        />
+    android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-    <SearchView
-        android:paddingLeft="0dp"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="@color/antiquewhite"/>
+
+    <EditText
+        android:id="@+id/search_et_details"
+        android:layout_width="0dp"
+        android:layout_weight="4"
+        android:layout_height="45dp"
+        android:hint="请输入要查找的内容"/>
+        <TextView
+            android:id="@+id/search_tv_search"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:text="搜索"
+            android:textColor="#ffffff"
+            android:background="@color/btn_green_noraml"
+            android:gravity="center"/>
     </LinearLayout>
 
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:dividerHeight="15dp"
-        android:id="@+id/search_listview"></ListView>
+        android:id="@+id/searchlistview"></ListView>
 </LinearLayout>

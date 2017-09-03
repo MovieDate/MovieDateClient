@@ -239,13 +239,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Intent intent=new Intent();
                 intent.setClass(MainActivity.this,StarPostActivity.class);
                 startActivity(intent);
-                finish();
                 break;
             case R.id.action_search:
                 Intent intent2 = new Intent();
                 intent2.setClass(MainActivity.this,SearchActivity.class);
                 startActivity(intent2);
-                finish();
                 break;
         }
         return true;
