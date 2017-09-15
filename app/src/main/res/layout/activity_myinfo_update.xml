@@ -136,7 +136,7 @@
                         style="@style/usertext"
                         android:text="生日"
                         android:textColor="@color/gray" />
-                    <EditText
+                    <TextView
                         style="@style/usertext"
                         android:background="@drawable/edittext_back"
                         android:id="@+id/updatemyinfo_et_birthday"

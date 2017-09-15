@@ -1,12 +1,15 @@
 package com.example.zhuocong.comxzc9.commom;
 
 /**
- * Created by wunaifu on 2017/8/9.
+ * Created by zhuocong on 2017/8/9.
  */
 public class APPConfig {
 
-//    private static String base_url="http://localhost:8080/";
-    private static String base_url="http://192.168.1.100:8080/";
+//  private static String base_url="http://localhost:8080/";
+    private static String base_url="http://192.168.1.101:8080/";
+   /*private static String base_url="http://27.45.53.166:80/";*/
+  /* private static String base_url="http://192.168.43.195:8080/";*/
+
 
     public static String login = base_url + "/userController/loginByPhonePsw";
     public static String findUserByPhone = base_url + "/userController/findUserByPhone";
@@ -29,6 +32,8 @@ public class APPConfig {
     public static String findReviewByPostId=base_url+"/reviewController/findReviewByPostId";
     public static String reviewDetailsParam=base_url+"/reviewController/addUserReviewByPostId";
     public static String findposttab=base_url+"/postController/findposttab";
+    public static String findFriendByMyIdFriendId=base_url+"/friendtController/findFriendByMyIdFriendId";
+    public static String addFriendByMyId=base_url+"/friendtController/addFriendByMyId";
 
 
     public static String USERDATA = "userData";//获取当前用户的key

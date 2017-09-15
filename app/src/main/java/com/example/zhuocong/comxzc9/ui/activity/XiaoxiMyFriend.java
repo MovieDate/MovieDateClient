@@ -17,6 +17,7 @@ import com.example.zhuocong.comxzc9.adapter.MyFriendAdapter;
 import com.example.zhuocong.comxzc9.commom.APPConfig;
 import com.example.zhuocong.comxzc9.entity.FriendList;
 import com.example.zhuocong.comxzc9.entity.User;
+import com.example.zhuocong.comxzc9.utils.Constant;
 import com.example.zhuocong.comxzc9.utils.OkHttpUtils;
 import com.example.zhuocong.comxzc9.utils.SharedPrefsUtil;
 import com.google.gson.Gson;
@@ -58,8 +59,13 @@ public class XiaoxiMyFriend extends Activity{
                 TextView myfriend_friendid=(TextView)view.findViewById(R.id.myfriend_friendid);
                 String id=myfriend_friendid.getText().toString().trim();
                 Log.d("testRun","friendId = "+id);
+                TextView myfriend_friendphone=(TextView)view.findViewById(R.id.myfriend_friendphone);
+                String phone=myfriend_friendphone.getText().toString().trim();
+                Log.d("testRun","phone = "+phone);
                 Intent intent=new Intent();
-                intent.setClass(XiaoxiMyFriend.this, AllPersonInfo.class);
+                /*intent.setClass(XiaoxiMyFriend.this, AllPersonInfo.class);*/
+                intent.setClass(XiaoxiMyFriend.this, ChatActivity.class);
+                intent.putExtra("phone",phone);
                 intent.putExtra("id",id);
                 startActivity(intent);
             }

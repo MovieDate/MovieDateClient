@@ -23,6 +23,7 @@ import com.example.zhuocong.comxzc9.ui.activity.UserUpdatePswActivity;
 import com.example.zhuocong.comxzc9.ui.basefragment.BaseFragment;
 import com.example.zhuocong.comxzc9.utils.SharedPrefsUtil;
 import com.google.gson.Gson;
+import com.hyphenate.chat.EMClient;
 
 /**
  * Created by zhuocong on 2017/8/4.
@@ -133,6 +134,7 @@ public class UserFragment extends BaseFragment{
                 Intent intent = new Intent();
                 intent.setClass(getActivity(), LoginActivity.class);
                 startActivity(intent);
+                EMClient.getInstance().logout(true);
                 getActivity().finish();
             }
         });

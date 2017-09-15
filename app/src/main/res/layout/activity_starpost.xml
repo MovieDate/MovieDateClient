@@ -107,13 +107,13 @@
                     android:textSize="20dp"
                     android:text="约影时间："
                     android:layout_marginLeft="0dp"/>
-                <EditText
+                <TextView
                     android:layout_width="0dp"
                     android:layout_weight="5"
                     android:layout_height="40dp"
                     android:background="@drawable/edittext_back"
                     android:id="@+id/starpost_et_movietime"
-                    android:hint="格式201708201950具体场次时间"
+                    android:hint="请输入具体场次时间"
                     android:singleLine="true"
                     android:layout_marginRight="10dp"/>
             </LinearLayout>

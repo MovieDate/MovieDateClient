@@ -1,14 +1,17 @@
 package com.example.zhuocong.comxzc9.ui.fragment;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
@@ -16,10 +19,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.zhuocong.comxzc9.R;
+import com.example.zhuocong.comxzc9.adapter.RefreshableView;
 import com.example.zhuocong.comxzc9.adapter.YueyingFragmentAdapter;
 import com.example.zhuocong.comxzc9.commom.APPConfig;
 import com.example.zhuocong.comxzc9.entity.Post;
 import com.example.zhuocong.comxzc9.entity.PostList;
+import com.example.zhuocong.comxzc9.entity.User;
 import com.example.zhuocong.comxzc9.ui.activity.LoginActivity;
 import com.example.zhuocong.comxzc9.ui.activity.RegisterActivity;
 import com.example.zhuocong.comxzc9.ui.activity.YueyingDetails;
@@ -29,6 +34,9 @@ import com.example.zhuocong.comxzc9.utils.SharedPrefsUtil;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
+import com.hyphenate.EMCallBack;
+import com.hyphenate.EMError;
+import com.hyphenate.chat.EMClient;
 
 import java.util.List;
 
@@ -39,7 +47,10 @@ import java.util.List;
 public class YueYingFragment extends BaseFragment{
 
 
+
+
     private ListView yueyinglistview;
+    RefreshableView refreshableView;
 
     private List<Post> postList;
     private List<PostList> postListList;
@@ -53,11 +64,28 @@ public class YueYingFragment extends BaseFragment{
         mContext=getActivity();
 
         yueyinglistview=(ListView)mBaseView.findViewById(R.id.yueyinglistview);
+        refreshableView = (RefreshableView) mBaseView.findViewById(R.id.yueying_refreshable_view);
+        refreshableView.setOnRefreshListener(new RefreshableView.PullToRefreshListener() {
+            @Override
+            public void onRefresh() {
+                try {
+                    Thread.sleep(3000);
+                    initMotion();
+                    /*Message message=new Message();
+                    message.what=1;
+                    handler.sendMessage(message);*/
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                refreshableView.finishRefreshing();
+            }
+        }, 1);
 
 
         initMotion();
         findView();
         initView();
+       /* signIn();*/
 
         yueyinglistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -89,6 +117,7 @@ public class YueYingFragment extends BaseFragment{
                         message.obj = response;
                         String postlistDateStr=response.toString();
                         Log.d("postlistDateStr","post2"+postlistDateStr);
+
                         handler.sendMessage(message);
 
                     }
@@ -108,33 +137,36 @@ public class YueYingFragment extends BaseFragment{
     private Handler handler= new Handler(){
         @Override
         public void handleMessage(Message msg){
-            String postlistDateStr=msg.obj.toString();
-            Log.d("postlistDateStr", "postlistDateStr1=" + postlistDateStr);
-            if (postlistDateStr.equals("nodata")) {
-                Toast.makeText(getActivity(), "还没有用户发起约影", Toast.LENGTH_SHORT).show();
-            } else {
-                //gson解析数据时，
-                try {
-                    postListList = gson.fromJson(postlistDateStr, new TypeToken<List<PostList>>() {}.getType());
-                    if (postListList != null && postListList.size() > 0) {
-                        Log.d("postListList", "postListList=" + postListList);
-                        yueyingFragmentAdapter = new YueyingFragmentAdapter(postListList, getActivity());
-                        yueyinglistview.setAdapter(yueyingFragmentAdapter);
+            switch (msg.what) {
+                case 0:
+                    String postlistDateStr=msg.obj.toString();
+                    Log.d("postlistDateStr", "postlistDateStr1=" + postlistDateStr);
+                    if (postlistDateStr.equals("nodata")) {
+                        Toast.makeText(getActivity(), "还没有用户发起约影", Toast.LENGTH_SHORT).show();
                     } else {
+                        //gson解析数据时，
+                        try {
+                            postListList = gson.fromJson(postlistDateStr, new TypeToken<List<PostList>>() {}.getType());
+                            if (postListList != null && postListList.size() > 0) {
+                                Log.d("postListList", "postListList=" + postListList);
+                                yueyingFragmentAdapter = new YueyingFragmentAdapter(postListList, getActivity());
+                                yueyinglistview.setAdapter(yueyingFragmentAdapter);
+                            } else {
 
+                            }
+                        } catch (JsonSyntaxException e1) {
+                            Toast.makeText(getActivity(), "内部数据解析异常", Toast.LENGTH_SHORT).show();
+                            Log.e("JsonSyntaxException",""+e1.getMessage());
+                            e1.printStackTrace();
+                        }
                     }
-                } catch (JsonSyntaxException e1) {
-                    Toast.makeText(getActivity(), "内部数据解析异常", Toast.LENGTH_SHORT).show();
-                    Log.e("JsonSyntaxException",""+e1.getMessage());
-                    e1.printStackTrace();
-                }
+                    break;
+            }
             }
 
 
-
-        }
-
     };
+
 
 
 

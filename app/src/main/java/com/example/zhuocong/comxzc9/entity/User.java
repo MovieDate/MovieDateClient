@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by wunaifu on 2017/8/9.
+ * Created by zhuocong on 2017/8/9.
  */
 public class User {
     private int id;//自增

@@ -29,11 +29,13 @@ import java.util.List;
 public class AllPersonInfo extends Activity{
     private String userDataStr;
     private User userInfo;
+    private String userData;
+    private User userinfo;
 
     private LinearLayout ll_one;
     private LinearLayout ll_two;
     private ImageView img_back;
-    private TextView tv_updateinfo;
+    private TextView allperson_tv_add;
 
     private TextView tv_account;
     private TextView tv_name;
@@ -50,17 +52,28 @@ public class AllPersonInfo extends Activity{
     private TextView tv_job;
     private TextView tv_habit;
 
+    private String id;
+    private String myId;
+    private String phone;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.allpersoninfo);
         initView();
         initData();
+        initupa();
+
     }
 
     private void initView(){
+        //读取数据
+        userDataStr = SharedPrefsUtil.getValue(AllPersonInfo.this,APPConfig.USERDATA,"");
+        Gson gson=new Gson();
+        userInfo=gson.fromJson(userDataStr,User.class);
+        Log.d("testRun","testId="+userInfo.getId());
         img_back = (ImageView) this.findViewById(R.id.allperson_img_back);
-        tv_updateinfo = (TextView) this.findViewById(R.id.allperson_tv_updateinfo);
+        allperson_tv_add = (TextView) this.findViewById(R.id.allperson_tv_add);
 
         tv_account = (TextView) this.findViewById(R.id.allperson_tv_account);
         tv_name = (TextView) this.findViewById(R.id.allperson_tv_name);
@@ -84,12 +97,25 @@ public class AllPersonInfo extends Activity{
             }
         });
 
+        allperson_tv_add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent();
+                intent.setClass(AllPersonInfo.this,AddConfirmActivity.class);
+                intent.putExtra("friendId",id);
+                intent.putExtra("myId",myId);
+                intent.putExtra("phone",phone);
+                startActivity(intent);
+                /*addfriend();*/
+            }
+        });
+
     }
 
     private void initData(){
         String id=this.getIntent().getStringExtra("id");
         Log.d("testRun","postPersonId="+id);
-        //添加网络请求中需要的参数，查找个人信息需要的参数是phone
+        //添加网络请求中需要的参数
         final List<OkHttpUtils.Param> list = new ArrayList<OkHttpUtils.Param>();
         OkHttpUtils.Param idParam = new OkHttpUtils.Param("id", id);
         list.add(idParam);
@@ -122,6 +148,87 @@ public class AllPersonInfo extends Activity{
 
     }
 
+    private void initupa(){
+        id=this.getIntent().getStringExtra("id");
+        Log.d("testRun","postPersonId="+id);
+        myId=String.valueOf(userInfo.getId());
+        Log.d("TestRun","myId="+userInfo.getId());
+        final List<OkHttpUtils.Param> list = new ArrayList<OkHttpUtils.Param>();
+        OkHttpUtils.Param myIdParam = new OkHttpUtils.Param("myId", myId);
+        OkHttpUtils.Param idParam= new OkHttpUtils.Param("friendId",id);
+        list.add(myIdParam);
+        list.add(idParam);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //post方式
+                OkHttpUtils.post(APPConfig.findFriendByMyIdFriendId, new OkHttpUtils.ResultCallback() {
+                    @Override
+                    public void onSuccess(Object response) {
+                        String result =response.toString();
+                        Log.d("TestRun","result2=="+result);
+                        if (result.equals("nodata")){
+                            allperson_tv_add.setVisibility(View.VISIBLE);
+                        }else {
+                            allperson_tv_add.setVisibility( View.INVISIBLE);
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Exception e) {
+                        Log.d("postDateStr","服务器连接失败，请重试！");
+                        Toast.makeText(AllPersonInfo.this, "服务器连接失败，请重试！", Toast.LENGTH_SHORT).show();
+
+                    }
+                },list);
+            }
+        }).start();
+    }
+
+    private  void addfriend(){
+        String id=this.getIntent().getStringExtra("id");
+        Log.d("testRun","postPersonId="+id);
+        String myId=String.valueOf(userInfo.getId());
+        Log.d("TestRun","myId="+myId);
+        final List<OkHttpUtils.Param> list = new ArrayList<OkHttpUtils.Param>();
+        OkHttpUtils.Param myIdParam = new OkHttpUtils.Param("myId", myId);
+        OkHttpUtils.Param idParam= new OkHttpUtils.Param("friendId",id);
+        list.add(myIdParam);
+        list.add(idParam);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //post方式
+                OkHttpUtils.post(APPConfig.addFriendByMyId, new OkHttpUtils.ResultCallback() {
+                    @Override
+                    public void onSuccess(Object response) {
+                        String result =response.toString();
+                        Log.d("TestRun","result3=="+result);
+                        if (result.equals("add_success")){
+                            Toast.makeText(AllPersonInfo.this,"添加成功！",Toast.LENGTH_SHORT).show();
+                            finish();
+                        }else {
+                            Toast.makeText(AllPersonInfo.this,"添加失败！",Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Exception e) {
+                        Log.d("postDateStr","服务器连接失败，请重试！");
+                        Toast.makeText(AllPersonInfo.this, "服务器连接失败，请重试！", Toast.LENGTH_SHORT).show();
+
+                    }
+                },list);
+            }
+        }).start();
+
+
+    }
+
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -130,29 +237,30 @@ public class AllPersonInfo extends Activity{
                 case 0:
                     //Gson解析数据
                     Gson gson=new Gson();
-                    userDataStr = msg.obj.toString();
-                    if (userDataStr.equals("nodata")) {
+                    userData= msg.obj.toString();
+                    if (userData.equals("nodata")) {
                         Toast.makeText(AllPersonInfo.this, "没有找到数据，请重试！", Toast.LENGTH_SHORT).show();
                     } else {//如果后台成功返回User数据，则显示出来，这里我只显示一部分，其他还要补充进来
-                        userInfo=gson.fromJson(userDataStr,User.class);
-                        tv_account.setText("账号："+userInfo.getPhone());
-                        tv_name.setText(userInfo.getName());
-                        tv_nickname.setText(userInfo.getNickname());
-                        tv_age.setText(userInfo.getAge()+"");
-                        if (userInfo.getGender() == 0) {
+                        userinfo=gson.fromJson(userData,User.class);
+                        phone=userinfo.getPhone();
+                        tv_account.setText("账号："+userinfo.getPhone());
+                        tv_name.setText(userinfo.getName());
+                        tv_nickname.setText(userinfo.getNickname());
+                        tv_age.setText(userinfo.getAge()+"");
+                        if (userinfo.getGender() == 0) {
                             tv_gender.setText("男");
                         }else {
                             tv_gender.setText("女");
                         }
-                        tv_birthday.setText(userInfo.getBirthday());
-                        tv_xingZuo.setText(userInfo.getXingZuo());
-                        tv_height.setText(userInfo.getHeight());
-                        tv_weight.setText(userInfo.getWeight());
-                        tv_phone.setText(userInfo.getPhone());
-                        tv_address.setText(userInfo.getAddress());
-                        tv_job.setText(userInfo.getJob());
-                        tv_signature.setText(userInfo.getSignature());
-                        tv_habit.setText(userInfo.getHabit());
+                        tv_birthday.setText(userinfo.getBirthday());
+                        tv_xingZuo.setText(userinfo.getXingZuo());
+                        tv_height.setText(userinfo.getHeight());
+                        tv_weight.setText(userinfo.getWeight());
+                        tv_phone.setText(userinfo.getPhone());
+                        tv_address.setText(userinfo.getAddress());
+                        tv_job.setText(userinfo.getJob());
+                        tv_signature.setText(userinfo.getSignature());
+                        tv_habit.setText(userinfo.getHabit());
                     }
                     break;
             }

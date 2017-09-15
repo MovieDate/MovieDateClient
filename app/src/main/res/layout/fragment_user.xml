@@ -26,7 +26,7 @@
                 <ImageView
                     android:layout_weight="1"
                     android:layout_gravity="center"
-                    android:src="@mipmap/ic_launcher"
+                    android:src="@drawable/touxiang"
                     android:layout_width="0dp"
                     android:layout_height="80dp" />
                 <LinearLayout
@@ -60,10 +60,14 @@
                 <LinearLayout
                     android:id="@+id/fprofile_ll_mycollect"
                     style="@style/top_layout">
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/collect"/>
                     <TextView
+                        android:layout_marginLeft="5dp"
                         style="@style/usertext"
                         android:text="我的收藏" />
-
                     <ImageView style="@style/img_arrow"/>
                 </LinearLayout>
                 <View style="@style/bg_line"/>
@@ -71,7 +75,12 @@
                 <LinearLayout
                     android:id="@+id/fprofile_ll_myyueying"
                     style="@style/bottom_layout">
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/history"/>
                     <TextView
+                        android:layout_marginLeft="5dp"
                         style="@style/usertext"
                         android:text="我的约影记录" />
                     <ImageView style="@style/img_arrow"/>
@@ -87,12 +96,15 @@
                 <LinearLayout
                     android:id="@+id/fprofile_ll_updatephone"
                     style="@style/top_layout">
-
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/mobile"/>
                     <TextView
+                        android:layout_marginLeft="5dp"
                         android:id="@+id/textView"
                         style="@style/usertext"
                         android:text="更换手机号" />
-
                     <ImageView style="@style/img_arrow"/>
                 </LinearLayout>
                 <View style="@style/bg_line"/>
@@ -100,12 +112,16 @@
                 <LinearLayout
                     android:id="@+id/fprofile_ll_updatepsw"
                     style="@style/bottom_layout">
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/password"/>
                     <TextView
+                        android:layout_marginLeft="5dp"
                         style="@style/usertext"
                         android:text="修改密码" />
                     <ImageView style="@style/img_arrow"/>
                 </LinearLayout>
-
             </LinearLayout>
 
 
@@ -115,7 +131,13 @@
                 <LinearLayout
                     android:id="@+id/fprofile_ll_setting"
                     style="@style/top_layout">
-                    <TextView style="@style/usertext"
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/settings"/>
+                    <TextView
+                        android:layout_marginLeft="5dp"
+                        style="@style/usertext"
                         android:text="我的设置" />
                     <ImageView style="@style/img_arrow"/>
                 </LinearLayout>
@@ -124,7 +146,12 @@
                 <LinearLayout
                     android:id="@+id/fprofile_ll_logout"
                     style="@style/mid_layout">
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/change"/>
                     <TextView
+                        android:layout_marginLeft="5dp"
                         style="@style/usertext"
                         android:text="切换账号" />
                     <ImageView style="@style/img_arrow"/>
@@ -134,7 +161,12 @@
                 <LinearLayout
                     android:id="@+id/fprofile_ll__finish"
                     style="@style/bottom_layout">
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/exits"/>
                     <TextView
+                        android:layout_marginLeft="5dp"
                         style="@style/usertext"
                         android:text="退出系统" />
                     <ImageView style="@style/img_arrow"/>

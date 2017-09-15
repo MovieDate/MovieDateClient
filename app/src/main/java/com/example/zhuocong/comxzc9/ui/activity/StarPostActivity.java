@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 import com.example.zhuocong.comxzc9.R;
 import com.example.zhuocong.comxzc9.commom.APPConfig;
 import com.example.zhuocong.comxzc9.entity.User;
+import com.example.zhuocong.comxzc9.utils.DateTimeDialogUtils;
 import com.example.zhuocong.comxzc9.utils.OkHttpUtils;
 import com.example.zhuocong.comxzc9.utils.SharedPrefsUtil;
 import com.google.gson.Gson;
@@ -29,15 +31,18 @@ import java.util.List;
 
 /**
  * Created by zhuocong on 2017/8/27.
- * 时间选择器还未完善
+ *
  */
 
-public class StarPostActivity extends Activity {
+public class StarPostActivity extends FragmentActivity implements View.OnClickListener, DateTimeDialogUtils.MyOnDateSetListener {
+    private SimpleDateFormat mFormatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:00");
+    private DateTimeDialogUtils dateTimeDialog;
+
     private ImageView starpost_img_back;
     private TextView starpost_tv_post;
     private EditText starpost_et_moviename;
     private EditText starpost_et_site;
-    private EditText starpost_et_movietime;
+    private TextView starpost_et_movietime;
     private RadioButton starpost_rb_gender0;
     private RadioButton starpost_rb_gender1;
     private RadioButton starpost_rb_gender2;
@@ -63,6 +68,7 @@ public class StarPostActivity extends Activity {
         super.onCreate(savedInstanceState);
         //设置页面
         setContentView(R.layout.activity_starpost);
+        dateTimeDialog = new DateTimeDialogUtils(this, null, this);
         init();
         initMotion();
 
@@ -79,7 +85,7 @@ public class StarPostActivity extends Activity {
         starpost_tv_post=(TextView)findViewById(R.id.starpost_tv_post);
         starpost_et_moviename=(EditText)findViewById(R.id.starpost_et_moviename);
         starpost_et_site=(EditText)findViewById(R.id.starpost_et_site);
-        starpost_et_movietime=(EditText)findViewById(R.id.starpost_et_movietime);
+        starpost_et_movietime=(TextView)findViewById(R.id.starpost_et_movietime);
         starpost_rb_gender0=(RadioButton)findViewById(R.id.starpost_rb_gender0);
         starpost_rb_gender1=(RadioButton)findViewById(R.id.starpost_rb_gender1);
         starpost_rb_gender2=(RadioButton)findViewById(R.id.starpost_rb_gender2);
@@ -96,6 +102,12 @@ public class StarPostActivity extends Activity {
                 finish();
             }
         });
+        starpost_et_movietime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showAll();
+            }
+        });
 
     }
 
@@ -108,7 +120,7 @@ public class StarPostActivity extends Activity {
                 Log.d("test","id"+postPersonId);
                 movieName=starpost_et_moviename.getText().toString().trim();
                 site=starpost_et_site.getText().toString().trim();
-                movieTime=starpost_et_movietime.getText().toString().trim();
+                /*movieTime=starpost_et_movietime.getText().toString().trim();*/
                 if (starpost_rb_gender0.isChecked()){
                     sex="0";
                 }else if (starpost_rb_gender1.isChecked()){
@@ -208,5 +220,29 @@ public class StarPostActivity extends Activity {
 
     };
 
+    @Override
+    public void onClick(View view) {
 
+        switch (view.getId()) {
+            case R.id.starpost_et_movietime:
+
+                showAll();
+                break;
+
+        }
+
+    }
+
+    private void showAll() {
+        dateTimeDialog.hideOrShow();
+    }
+
+
+    @Override
+    public void onDateSet(Date date) {
+        movieTime= mFormatter.format(date);
+        starpost_et_movietime.setText(movieTime);
+        Log.d("testRun","movieTime="+movieTime);
+
+    }
 }

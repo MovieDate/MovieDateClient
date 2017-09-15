@@ -57,6 +57,7 @@ public class MycollectAdapter extends BaseAdapter {
         String id= String.valueOf(collectList.getPostId());
 
         collectlist_tv_postid.setText(id);
+        Log.d("testRun","name="+collectList.getNickname());
         if (collectList.getNickname().equals("未填写")){
             collectlist_tv_nickname.setText(collectList.getName());
             Log.d("testRun","Nickname"+collectList.getName());

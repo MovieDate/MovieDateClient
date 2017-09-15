@@ -6,46 +6,310 @@
         android:orientation="horizontal"
         android:background="#ddd"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="wrap_content">
         <Button
             android:id="@+id/tv_yingxun_hotmovie"
-            android:textSize="20sp"
+            android:textSize="15sp"
+            android:textColor="@color/white"
             android:text="  近期热门  "
             android:gravity="center"
+            android:background="@color/gray_font"
             android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="50dp" />
+            android:layout_height="40dp" />
         <TextView
             android:background="@color/gray"
             android:layout_width="1dp"
             android:layout_height="match_parent" />
         <Button
             android:id="@+id/tv_yingxun_future"
-            android:textSize="20sp"
+            android:textSize="15sp"
             android:text="  即将上映  "
+            android:textColor="@color/white"
+            android:background="@color/gray_font"
             android:gravity="center"
             android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="50dp" />
+            android:layout_height="40dp" />
         <TextView
             android:background="@color/gray"
             android:layout_width="1dp"
             android:layout_height="match_parent" />
         <Button
             android:id="@+id/tv_yingxun_movietime"
-            android:textSize="20sp"
+            android:textSize="15sp"
+            android:textColor="@color/white"
+            android:background="@color/gray_font"
             android:text="  影院排期  "
             android:gravity="center"
             android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="50dp" />
+            android:layout_height="40dp" />
     </LinearLayout>
-    <ListView
-        android:dividerHeight="10dp"
-        android:layout_marginBottom="10dp"
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/yueyinglistview"/>
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/zhanlang2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="60sp"
+                    android:layout_height="80sp"
+                    android:background="@drawable/zhanlang2"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="80sp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="战狼2"
+                        android:textSize="18sp"/>
+
+                    <TextView
+                        android:layout_marginTop="4dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="主演：吴京 | 张翰 等"/>
+
+                    <TextView
+                        android:layout_marginTop="8dp"
+                        android:layout_gravity="bottom"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="浪子遇险展军魂，痞男开挂铁骨存。"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <View style="@style/bg_line"/>
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="60sp"
+                android:layout_height="80sp"
+                android:background="@drawable/xingqiujueqi"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="80sp"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="猩球崛起3：终极之战"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:layout_marginTop="4dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="主演：马特里夫斯 | 安迪瑟金斯 等"/>
+
+                <TextView
+                    android:layout_marginTop="8dp"
+                    android:layout_gravity="bottom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="凯撒燃起复仇之火，或得或失皆因果。"/>
+            </LinearLayout>
+        </LinearLayout>
+
+            <View style="@style/bg_line"/>
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="60sp"
+                    android:layout_height="80sp"
+                    android:background="@drawable/zhizhuxia"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="80sp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="蜘蛛侠：英雄归来"
+                        android:textSize="18sp"/>
+
+                    <TextView
+                        android:layout_marginTop="4dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="主演：乔沃茨 | 汤姆赫兰德 等"/>
+
+                    <TextView
+                        android:layout_marginTop="8dp"
+                        android:layout_gravity="bottom"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="钢铁侠实力助阵，小蜘蛛大战秃鹰。"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <View style="@style/bg_line"/>
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="60sp"
+                    android:layout_height="80sp"
+                    android:background="@drawable/daojianshenyu"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="80sp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="刀剑神域：序列之争"
+                        android:textSize="18sp"/>
+
+                    <TextView
+                        android:layout_marginTop="4dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="主演：松冈祯丞 | 卢松遥 等"/>
+
+                    <TextView
+                        android:layout_marginTop="8dp"
+                        android:layout_gravity="bottom"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="虚拟现实世界里，不停战斗守护你。"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <View style="@style/bg_line"/>
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="60sp"
+                    android:layout_height="80sp"
+                    android:background="@drawable/kanbujiandekeren"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="80sp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="看不见的客人"
+                        android:textSize="18sp"/>
+
+                    <TextView
+                        android:layout_marginTop="4dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="主演：奥里奥尔保罗 | 马里奥卡萨斯 等"/>
+
+                    <TextView
+                        android:layout_marginTop="8dp"
+                        android:layout_gravity="bottom"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="意外卷入谋杀案，真相谎言相交织。"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <View style="@style/bg_line"/>
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="60sp"
+                    android:layout_height="80sp"
+                    android:background="@drawable/huitongde17sui"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="80sp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="会痛的十七岁"
+                        android:textSize="18sp"/>
+
+                    <TextView
+                        android:layout_marginTop="4dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="主演：徐娇 | 胡夏 等"/>
+
+                    <TextView
+                        android:layout_marginTop="8dp"
+                        android:layout_gravity="bottom"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="励志二次元少女，感受会痛十七岁。"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <View style="@style/bg_line"/>
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="60sp"
+                    android:layout_height="80sp"
+                    android:background="@drawable/chulianriji"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="80sp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="初恋日记"
+                        android:textSize="18sp"/>
+
+                    <TextView
+                        android:layout_marginTop="4dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="主演：马志威 | 王敏奕 等"/>
+
+                    <TextView
+                        android:layout_marginTop="8dp"
+                        android:layout_gravity="bottom"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="初恋甜蜜又苦涩，唤起你青春共鸣。"/>
+                </LinearLayout>
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+
 
 
 

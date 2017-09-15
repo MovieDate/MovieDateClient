@@ -46,6 +46,7 @@ public class UserMyCollectActivity extends Activity{
     private List<CollectList> collectListList;
     private MycollectAdapter mycollectAdapter;
     private ImageView mycollect_img_back;
+    private TextView mycollect_tv_refresh;
     Gson gson = new Gson();
     List<String> list=new ArrayList<String>();
     @Override
@@ -54,14 +55,15 @@ public class UserMyCollectActivity extends Activity{
         setContentView(R.layout.fragment_user_mycollect);
         initView();
         initData();
-        String Size=SharedPrefsUtil.getValue(UserMyCollectActivity.this,APPConfig.SIZE,"");
-        int size= Integer.parseInt(Size);
+        /*String Size=SharedPrefsUtil.getValue(UserMyCollectActivity.this,APPConfig.SIZE,"");
+        int size= Integer.parseInt(Size);*/
 
     }
 
     public void initView(){
         mycollectlistview=(ListView)this.findViewById(R.id.mycollectlistview);
         mycollect_img_back=(ImageView)this.findViewById(R.id.mycollect_img_back);
+        mycollect_tv_refresh=(TextView)this.findViewById(R.id.mycollect_tv_refresh);
 
         userDataStr = SharedPrefsUtil.getValue(UserMyCollectActivity.this,APPConfig.USERDATA,"");
         Gson gson= new Gson();
@@ -87,7 +89,16 @@ public class UserMyCollectActivity extends Activity{
             }
         });
 
+        mycollect_tv_refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                initData();
+            }
+        });
+
     }
+
+
     public void initData(){
         collecterId= String.valueOf(userInfo.getId());
         Log.d("TestRun","collecterId="+collecterId);

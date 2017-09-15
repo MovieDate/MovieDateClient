@@ -24,4 +24,5 @@
             android:id="@+id/person_friendid"/>
     </LinearLayout>
 
+
 </LinearLayout>

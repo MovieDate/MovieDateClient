@@ -7,6 +7,7 @@ package com.example.zhuocong.comxzc9.entity;
 public class FriendList {
     private String name;
     private int friendId;
+    private String friendphone;
 
     public String getName() {
         return name;
@@ -24,11 +25,20 @@ public class FriendList {
         this.friendId = friendId;
     }
 
+    public String getFriendphone() {
+        return friendphone;
+    }
+
+    public void setFriendphone(String friendphone) {
+        this.friendphone = friendphone;
+    }
+
     @Override
     public String toString() {
         return "FriendList{" +
                 "name='" + name + '\'' +
                 ", friendId=" + friendId +
+                ", friendphone=" + friendphone +
                 '}';
     }
 }

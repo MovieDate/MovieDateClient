@@ -63,7 +63,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="约影地点："
+                        android:text="约影内容："
                         android:textSize="15dp"/>
                     <TextView
                         android:id="@+id/collectlist_tv_details"

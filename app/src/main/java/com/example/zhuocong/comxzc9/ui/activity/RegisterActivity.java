@@ -1,6 +1,7 @@
 package com.example.zhuocong.comxzc9.ui.activity;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,11 +12,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.zhuocong.comxzc9.R;
 import com.example.zhuocong.comxzc9.commom.APPConfig;
+import com.example.zhuocong.comxzc9.entity.User;
 import com.example.zhuocong.comxzc9.utils.OkHttpUtils;
+import com.google.gson.Gson;
+import com.hyphenate.EMError;
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.exceptions.HyphenateException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +34,9 @@ import java.util.regex.Pattern;
  */
 
 public class RegisterActivity extends Activity {
+
+    // 弹出框
+    private ProgressDialog mDialog;
     private EditText et_register_phone;
     private EditText et_register_psd;
     private EditText et_register_pswaffirm;
@@ -35,6 +45,7 @@ public class RegisterActivity extends Activity {
     private RadioButton rb_register_gender0;
     private RadioButton rb_register_gender1;
     private ImageView register_img_back;
+    private TextView register_id;
 
     private String account;
     private String psd;
@@ -42,6 +53,7 @@ public class RegisterActivity extends Activity {
     private String gender;
     private String name;
     private Boolean isValid;
+    private String id;
 
 
     @Override
@@ -50,7 +62,7 @@ public class RegisterActivity extends Activity {
         //设置页面
         setContentView(R.layout.activity_register);
         initView();
-        initMotion();
+
 
     }
 
@@ -64,6 +76,7 @@ public class RegisterActivity extends Activity {
         rb_register_gender0=(RadioButton)this.findViewById(R.id.rb_register_gender0);
         rb_register_gender1=(RadioButton)this.findViewById(R.id.rb_register_gender1);
         register_img_back=(ImageView)this.findViewById(R.id.register_img_back);
+        register_id=(TextView)this.findViewById(R.id.register_id);
 
         register_img_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,14 +85,19 @@ public class RegisterActivity extends Activity {
             }
         });
 
-
-    }
-
-    //c初始化监听
-    public void initMotion(){
         bt_register_reg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                signUp();
+                initMotion();
+
+            }
+        });
+
+    }
+
+    //初始化监听
+    public void initMotion(){
                 //获取数据
                 account=et_register_phone.getText().toString().trim();
                 psd=et_register_psd.getText().toString().trim();
@@ -91,7 +109,6 @@ public class RegisterActivity extends Activity {
                 if(rb_register_gender1.isChecked()){
                     gender="1";
                 }
-
                 //验证手机号码
                 isPhoneNumberValid(account);
                 if (account.equals("") || psd.equals("")||pswaffirm.equals("")||name.equals("")) {
@@ -112,6 +129,7 @@ public class RegisterActivity extends Activity {
                     list.add(psdParam);
                     list.add(nameParam);
                     list.add(genderParam);
+
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
@@ -124,18 +142,18 @@ public class RegisterActivity extends Activity {
                                     message.what = 0;
                                     message.obj = response;
                                     String result = response.toString();
-                                    if (result.equals("add_success")) {
+                                    if (!result.equals("add_failed")) {
                                         // Toast.LENGTH_SHORT停留时间LENGTH_LONG                                       //
-                                        Toast.makeText(RegisterActivity.this,"注册成功！", Toast.LENGTH_SHORT).show();
+                                        /*Toast.makeText(RegisterActivity.this, "注册成功1！", Toast.LENGTH_LONG).show();*/
+                                        Intent intent = new Intent();
+                                        intent.setClass(RegisterActivity.this, LoginActivity.class);
+                                        startActivity(intent);
+                                        finish();
                                         handler.sendMessage(message);
-
+                                    } else {
+                                        /*Toast.makeText(RegisterActivity.this, "填写错误，注册失败！", Toast.LENGTH_SHORT).show();*/
                                     }
-                                    else{
-                                        Toast.makeText(RegisterActivity.this,"填写错误，注册失败！",Toast.LENGTH_SHORT).show();
-                                    }
-
                                 }
-
                                 @Override
                                 public void onFailure(Exception e) {
                                     Log.d("testRun", "请求失败loginActivity----new Thread(new Runnable() {------");
@@ -147,10 +165,83 @@ public class RegisterActivity extends Activity {
                         }
                     }).start();
                 }
+
+    }
+
+    /**
+     * 注册方法
+     */
+    private void signUp() {
+        // 注册是耗时过程，所以要显示一个dialog来提示下用户
+        mDialog = new ProgressDialog(this);
+        mDialog.setMessage("注册中，请稍后...");
+        mDialog.show();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    String mid = et_register_phone.getText().toString().trim();;
+                    String password = et_register_psd.getText().toString().trim();
+                    Log.d("testRun","password="+psd);
+                    Log.d("testRun","mid="+mid);
+                    EMClient.getInstance().createAccount(mid, password);
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (!RegisterActivity.this.isFinishing()) {
+                                mDialog.dismiss();
+                            }
+                            Toast.makeText(RegisterActivity.this, "注册成功！", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                } catch (final HyphenateException e) {
+                    e.printStackTrace();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (!RegisterActivity.this.isFinishing()) {
+                                mDialog.dismiss();
+                            }
+                            /**
+                             * 关于错误码可以参考官方api详细说明
+                             * http://www.easemob.com/apidoc/android/chat3.0/classcom_1_1hyphenate_1_1_e_m_error.html
+                             */
+                            int errorCode = e.getErrorCode();
+                            String message = e.getMessage();
+                            Log.d("lzan13", String.format("sign up - errorCode:%d, errorMsg:%s", errorCode, e.getMessage()));
+                            switch (errorCode) {
+                                // 网络错误
+                                case EMError.NETWORK_ERROR:
+                                    Toast.makeText(RegisterActivity.this, "网络错误 code: " + errorCode + ", message:" + message, Toast.LENGTH_LONG).show();
+                                    break;
+                                // 用户已存在
+                                case EMError.USER_ALREADY_EXIST:
+                                    Toast.makeText(RegisterActivity.this, "用户已存在 code: " + errorCode + ", message:" + message, Toast.LENGTH_LONG).show();
+                                    break;
+                                // 参数不合法，一般情况是username 使用了uuid导致，不能使用uuid注册
+                                case EMError.USER_ILLEGAL_ARGUMENT:
+                                    Toast.makeText(RegisterActivity.this, "参数不合法，一般情况是username 使用了uuid导致，不能使用uuid注册 code: " + errorCode + ", message:" + message, Toast.LENGTH_LONG).show();
+                                    break;
+                                // 服务器未知错误
+                                case EMError.SERVER_UNKNOWN_ERROR:
+                                    Toast.makeText(RegisterActivity.this, "服务器未知错误 code: " + errorCode + ", message:" + message, Toast.LENGTH_LONG).show();
+                                    break;
+                                case EMError.USER_REG_FAILED:
+                                    Toast.makeText(RegisterActivity.this, "账户注册失败 code: " + errorCode + ", message:" + message, Toast.LENGTH_LONG).show();
+                                    break;
+                                default:
+                                    Toast.makeText(RegisterActivity.this, "ml_sign_up_failed code: " + errorCode + ", message:" + message, Toast.LENGTH_LONG).show();
+                                    break;
+                            }
+                        }
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
-        });
-
-
+        }).start();
     }
 
     private Handler handler = new Handler(){
@@ -158,14 +249,15 @@ public class RegisterActivity extends Activity {
         public void handleMessage(Message msg) {
 //            super.handleMessage(msg);
             switch (msg.what){
-                case 0:
+                case 100:
                     String result = (String)msg.obj;
-                    if (result.equals("add_success") ){
-                        Toast.makeText(RegisterActivity.this,"注册成功！", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent();
-                        intent.setClass(RegisterActivity.this, LoginActivity.class);
-                        startActivity(intent);
-                        finish();
+                    Gson gson=new Gson();
+                    User userInof=gson.fromJson(result,User.class);
+                    id= String.valueOf(userInof.getId());
+                    register_id.setText(id);
+                    Log.d("testRun","id="+id);
+                    if (!result.equals("add_faild") ){
+                        Toast.makeText(RegisterActivity.this,"注册成功3！", Toast.LENGTH_LONG).show();
 
                     }
                     else{

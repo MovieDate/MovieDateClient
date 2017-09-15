@@ -47,9 +47,12 @@ public class MyFriendAdapter extends BaseAdapter {
         //在view视图中查找id为image_photo的控件
         TextView myfriend_name= (TextView) view.findViewById(R.id.myfriend_name);
         TextView myfriend_friendid=(TextView)view.findViewById(R.id.myfriend_friendid);
+        TextView myfriend_friendphone=(TextView)view.findViewById(R.id.myfriend_friendphone);
         myfriend_name.setText(friendList.getName());
         String id=String.valueOf(friendList.getFriendId());
         myfriend_friendid.setText(id);
+        String phone=String.valueOf(friendList.getFriendphone());
+        myfriend_friendphone.setText(phone);
 
         return view;
     }

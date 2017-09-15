@@ -64,12 +64,12 @@ public class YueyingDetails extends Activity {
     private TextView details_tv_sex;
     private TextView details_tv_movietype;
     private TextView details_tv_details;
-    private TextView details_tv_apply;
-    private TextView details_tv_review;
-    private TextView details_tv_collect;
+    private LinearLayout details_tv_apply;
+    private LinearLayout details_tv_review;
+    private LinearLayout details_tv_collect;
     private ListView reviewlistview;
     private TextView review_details;
-    private TextView details_tv_check;
+    private LinearLayout details_tv_check;
     private EditText details_et_review;
     private TextView details_tv_finish;
 
@@ -99,6 +99,7 @@ public class YueyingDetails extends Activity {
         //读取数据
         userDataStr = SharedPrefsUtil.getValue(YueyingDetails.this,APPConfig.USERDATA,"");
         userInfo=gson.fromJson(userDataStr,User.class);
+        Log.d("testRun","testId="+userInfo.getId());
         //初始化控件
         details_img_back=(ImageView)this.findViewById(R.id.details_img_back);
         details_ll_myuser=(LinearLayout)this.findViewById(R.id.details_ll_myuser);
@@ -110,17 +111,17 @@ public class YueyingDetails extends Activity {
         details_tv_sex=(TextView)this.findViewById(R.id.details_tv_sex);
         details_tv_movietype=(TextView)this.findViewById(R.id.details_tv_movietype);
         details_tv_details=(TextView)this.findViewById(R.id.details_tv_details);
-        details_tv_apply=(TextView)this.findViewById(R.id.details_tv_apply);
-        details_tv_review=(TextView)this.findViewById(R.id.details_tv_review);
-        details_tv_collect=(TextView)this.findViewById(R.id.details_tv_collect);
+        details_tv_apply=(LinearLayout)this.findViewById(R.id.details_tv_apply);
+        details_tv_review=(LinearLayout)this.findViewById(R.id.details_tv_review);
+        details_tv_collect=(LinearLayout)this.findViewById(R.id.details_tv_collect);
         reviewlistview=(ListView)this.findViewById(R.id.reviewlistview);
         review_details=(TextView)this.findViewById(R.id.review_details);
-        details_tv_check=(TextView)this.findViewById(R.id.details_tv_check);
+        details_tv_check=(LinearLayout)this.findViewById(R.id.details_tv_check);
         et_sendDicscuss = (EditText) findViewById(R.id.et_activity_shareinfo_discusscontent);
         tv_send = (TextView) findViewById(R.id.bt_activity_shareinfo_send);
         tv_unsend = (TextView) findViewById(R.id.bt_activity_shareinfo_unsend);
         ll_sendDiscuss = (LinearLayout) findViewById(R.id.ll_activity_shareinfo_senddiscuss);
-        details_tv_finish=(TextView)findViewById(R.id.details_tv_finish);
+        /*details_tv_finish=(TextView)findViewById(R.id.details_tv_finish);*/
 
         et_sendDicscuss.setVisibility(View.GONE);
         ll_sendDiscuss.setVisibility(View.GONE);
@@ -178,7 +179,6 @@ public class YueyingDetails extends Activity {
                 Log.d("testRun","postId2 = "+postId2);
                 intent.putExtra("postId2",postId2);
                 startActivity(intent);
-                finish();
             }
         });
 
@@ -471,9 +471,12 @@ public class YueyingDetails extends Activity {
 
                         //设置查看报名状态按钮状态
                         if (postInfo2.getMovieType()==0&&((userInfo.getId())!=(postInfo2.getPostPersonId()))){
-                            details_tv_check.setVisibility(View.GONE);
-                        }else {
-                            details_tv_check.setVisibility(View.VISIBLE);
+                            details_tv_check.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Toast.makeText(YueyingDetails.this,"由于该约影为单独约影，您没有权限查看报名情况！",Toast.LENGTH_SHORT).show();
+                                }
+                            });
                         }
 
                         details_tv_apply.setOnClickListener(new View.OnClickListener() {

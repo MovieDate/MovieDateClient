@@ -20,7 +20,6 @@
             android:src="@drawable/register"
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
-
             />
 
         <TextView
@@ -31,6 +30,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             />
+        <TextView
+            android:id="@+id/register_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            android:textColor="@color/white"/>
         <TextView
             android:text="请填写以下注册信息，手机号即为登陆账号"
             android:textSize="12sp"

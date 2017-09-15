@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -16,24 +18,28 @@ import android.widget.Toast;
 import com.example.zhuocong.comxzc9.R;
 import com.example.zhuocong.comxzc9.commom.APPConfig;
 import com.example.zhuocong.comxzc9.entity.User;
+import com.example.zhuocong.comxzc9.utils.DateTimeDialogUtils;
 import com.example.zhuocong.comxzc9.utils.OkHttpUtils;
 import com.example.zhuocong.comxzc9.utils.SharedPrefsUtil;
 import com.google.gson.Gson;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
  * Created by zhuocong on 2017/8/23.
- * /*未能实现动态刷新，待解决
- * 生日栏还可以继续优化
  */
 
-public class MyUserInfoUpdateActivity extends Activity {
+public class MyUserInfoUpdateActivity extends FragmentActivity implements View.OnClickListener, DateTimeDialogUtils.MyOnDateSetListener{
     private String userDataStr;
     private User userInfo;
     private String userDataStr2;
     private User userInfo2;
+
+    private SimpleDateFormat mFormatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:00");
+    private DateTimeDialogUtils dateTimeDialog;
 
     private LinearLayout ll_one;
     private LinearLayout ll_two;
@@ -48,7 +54,7 @@ public class MyUserInfoUpdateActivity extends Activity {
     private TextView tv_phone;
     private EditText et_address;
     private EditText et_signature;
-    private EditText et_birthday;
+    private TextView et_birthday;
     private EditText et_xingZuo;
     private EditText et_height;
     private EditText et_weight;
@@ -73,17 +79,15 @@ public class MyUserInfoUpdateActivity extends Activity {
     //Gson解析数据
      Gson gson=new Gson();
 
-    public void refresh() {
-        onCreate(null);
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_myinfo_update);
+        dateTimeDialog = new DateTimeDialogUtils(this, null, this);
         initView();
         initData();
         initMotion();
+
 
     }
 
@@ -103,7 +107,7 @@ public class MyUserInfoUpdateActivity extends Activity {
         tv_phone = (TextView) this.findViewById(R.id.updatemyinfo_tv_phone);
         et_address=(EditText) this.findViewById(R.id.updatemyinfo_et_address);
         et_signature = (EditText) this.findViewById(R.id.updatemyinfo_et_signature);
-        et_birthday= (EditText) this.findViewById(R.id.updatemyinfo_et_birthday);
+        et_birthday= (TextView) this.findViewById(R.id.updatemyinfo_et_birthday);
         et_xingZuo= (EditText) this.findViewById(R.id.updatemyinfo_et_xingZuo);
         et_height= (EditText) this.findViewById(R.id.updatemyinfo_et_height);
         et_weight= (EditText) this.findViewById(R.id.updatemyinfo_et_weight);
@@ -117,6 +121,14 @@ public class MyUserInfoUpdateActivity extends Activity {
                 intent.setClass(MyUserInfoUpdateActivity.this,MyUserInfoActivity.class );
                 startActivity(intent);*/
                 finish();
+            }
+        });
+
+        et_birthday.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MyUserInfoUpdateActivity.this,"点击了！",Toast.LENGTH_LONG).show();
+                showAll();
             }
         });
 
@@ -179,7 +191,11 @@ public class MyUserInfoUpdateActivity extends Activity {
                 phone=tv_phone.getText().toString().trim();
                 address=et_address.getText().toString().trim();
                 signature=et_signature.getText().toString().trim();
-                birthday=et_birthday.getText().toString().trim();
+                Log.d("testRun","birthday22="+birthday);
+                if (birthday==null){
+                    birthday=et_birthday.getText().toString().trim();
+                    Log.d("testRun","birthday33="+birthday);
+                }
                 xingZuo=et_xingZuo.getText().toString().trim();
                 height=et_height.getText().toString().trim();
                 weight=et_weight.getText().toString().trim();
@@ -308,4 +324,28 @@ public class MyUserInfoUpdateActivity extends Activity {
         }
 
     };
+
+    @Override
+    public void onClick(View view) {
+
+        switch (view.getId()) {
+            case R.id.updatemyinfo_et_birthday:
+
+                showAll();
+                break;
+
+        }
+
+    }
+
+    private void showAll() {
+        dateTimeDialog.hideOrShow();
+    }
+
+    @Override
+    public void onDateSet(Date date) {
+        birthday= mFormatter.format(date);
+        et_birthday.setText(birthday);
+        Log.d("testRun","birthday="+birthday);
+    }
 }

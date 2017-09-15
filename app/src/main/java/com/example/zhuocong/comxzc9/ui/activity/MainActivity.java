@@ -24,6 +24,8 @@ import com.example.zhuocong.comxzc9.ui.fragment.UserFragment;
 import com.example.zhuocong.comxzc9.ui.fragment.XiaoXiFragment;
 import com.example.zhuocong.comxzc9.ui.fragment.YingXunFragment;
 import com.example.zhuocong.comxzc9.ui.fragment.YueYingFragment;
+import com.example.zhuocong.comxzc9.utils.Constant;
+import com.example.zhuocong.comxzc9.utils.DateTimeDialogUtils;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -244,6 +246,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Intent intent2 = new Intent();
                 intent2.setClass(MainActivity.this,SearchActivity.class);
                 startActivity(intent2);
+                break;
+            case R.id.action_add:
+                Intent intent1 =new Intent();
+                intent1.setClass(MainActivity.this,AddActivity.class);
+                startActivity(intent1);
+                break;
+            case R.id.action_CHAT:
+                Intent intent3 = new Intent();
+                intent3.setClass(MainActivity.this,ChatActivity.class);
+                intent3.putExtra(Constant.CHAT_TO_NAME,"15089828319");
+                startActivity(intent3);
+                break;
+            case R.id.action_CHAT2:
+                Intent intent4 = new Intent();
+                intent4.setClass(MainActivity.this,ChatActivity.class);
+                intent4.putExtra(Constant.CHAT_TO_NAME,"12345678");
+                startActivity(intent4);
                 break;
         }
         return true;

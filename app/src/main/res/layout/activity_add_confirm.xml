@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:background="@color/btn_gray_pressed"
+        android:layout_width="match_parent"
+        android:layout_height="35dp">
+
+        <ImageView
+            android:id="@+id/addconfirm_img_back"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/back01"
+            android:layout_width="60dp"
+            android:layout_height="25dp" />
+        <TextView
+            android:text="验证申请"
+            android:textSize="20dp"
+            android:textColor="#fffff1"
+            android:layout_gravity="center_vertical"
+            android:layout_centerHorizontal="true"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:background="@color/btn_green_noraml"
+            android:id="@+id/addconfirm_tv_send"
+            android:gravity="center"
+            android:layout_margin="5dp"
+            android:layout_gravity="center_vertical"
+            android:textSize="20dp"
+            android:layout_marginRight="5dp"
+            android:text="发送"
+            android:textColor="#fffff1"
+            android:layout_width="60dp"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"
+            android:hint="你需要发送验证申请，等待对方通过"/>
+        <EditText
+            android:id="@+id/addconfirm_et_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+</LinearLayout>
