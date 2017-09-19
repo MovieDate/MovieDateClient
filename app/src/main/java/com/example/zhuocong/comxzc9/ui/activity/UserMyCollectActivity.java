@@ -101,7 +101,7 @@ public class UserMyCollectActivity extends Activity{
 
     public void initData(){
         collecterId= String.valueOf(userInfo.getId());
-        Log.d("TestRun","collecterId="+collecterId);
+        Log.d("testRun","collecterId="+collecterId);
         final List<OkHttpUtils.Param> list=new ArrayList<OkHttpUtils.Param>();
         OkHttpUtils.Param collecterIdParam =new OkHttpUtils.Param("collecterId",collecterId);
         list.add(collecterIdParam);
@@ -145,7 +145,7 @@ public class UserMyCollectActivity extends Activity{
                    String collectListListStr=msg.obj.toString();
                    Log.d("testRun","collectListListStr="+collectListListStr);
 
-                   if (collectListListStr==null) {
+                   if (collectListListStr.equals("nodata")) {
                        Toast.makeText(UserMyCollectActivity.this, "暂时没有收藏约影", Toast.LENGTH_SHORT).show();
                    } else {
                        //gson解析数据时，

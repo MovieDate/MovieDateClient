@@ -6,10 +6,10 @@ package com.example.zhuocong.comxzc9.commom;
 public class APPConfig {
 
 //  private static String base_url="http://localhost:8080/";
-    private static String base_url="http://192.168.1.101:8080/";
+   /* private static String base_url="http://192.168.1.101:8080/";*/
    /*private static String base_url="http://27.45.53.166:80/";*/
-  /* private static String base_url="http://192.168.43.195:8080/";*/
 
+    private static String base_url="http://192.168.43.195:8080/";
 
     public static String login = base_url + "/userController/loginByPhonePsw";
     public static String findUserByPhone = base_url + "/userController/findUserByPhone";
@@ -34,6 +34,10 @@ public class APPConfig {
     public static String findposttab=base_url+"/postController/findposttab";
     public static String findFriendByMyIdFriendId=base_url+"/friendtController/findFriendByMyIdFriendId";
     public static String addFriendByMyId=base_url+"/friendtController/addFriendByMyId";
+    public static String findPostBypostPersonId=base_url+"/postController/findPostBypostPersonId";
+    public static String findPostByjoin=base_url+"/postController/findPostByjoin";
+    public static String findPostByhistory=base_url+"/postController/findPostByhistory";
+
 
 
     public static String USERDATA = "userData";//获取当前用户的key

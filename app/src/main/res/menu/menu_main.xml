@@ -26,10 +26,6 @@
         android:orderInCategory="100"
         android:title="和12345678聊天" />
 
-    <item
-        android:id="@+id/action_CHAT3"
-        android:orderInCategory="100"
-        android:title="聊天" />
 
 
 

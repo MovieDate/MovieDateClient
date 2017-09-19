@@ -76,7 +76,7 @@ public class ECApplication extends Application {
 
         EMOptions options = new EMOptions();
         // 设置Appkey，如果配置文件已经配置，这里可以不用设置
-        // options.setAppKey("lzan13#hxsdkdemo");
+        // options.setAppKey("");
         // 设置自动登录
         options.setAutoLogin(true);
         // 设置是否需要发送已读回执
@@ -88,7 +88,7 @@ public class ECApplication extends Application {
         // 设置是否根据服务器时间排序，默认是true
         options.setSortMessageByServerTime(false);
         // 收到好友申请是否自动同意，如果是自动同意就不会收到好友请求的回调，因为sdk会自动处理，默认为true
-        options.setAcceptInvitationAlways(false);
+        options.setAcceptInvitationAlways(true);
         // 设置是否自动接收加群邀请，如果设置了当收到群邀请会自动同意加入
         options.setAutoAcceptGroupInvitation(false);
         // 设置（主动或被动）退出群组时，是否删除群聊聊天记录

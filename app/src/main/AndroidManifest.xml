@@ -158,6 +158,14 @@
 
         <activity android:name=".ui.activity.ZhanLangActivity"></activity>
 
+        <activity android:name=".ui.activity.UserMyyueyingBymeActivity"></activity>
+
+        <activity android:name=".ui.activity.UserMyyueyingJoinActivity"></activity>
+
+        <activity android:name=".ui.activity.UserMyyueyingHistory"></activity>
+
+        <activity android:name=".ui.activity.YueYingDetailsReviewActivity"></activity>
+
 
     </application>
 

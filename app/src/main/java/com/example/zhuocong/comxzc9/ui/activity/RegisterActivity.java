@@ -257,7 +257,7 @@ public class RegisterActivity extends Activity {
                     register_id.setText(id);
                     Log.d("testRun","id="+id);
                     if (!result.equals("add_faild") ){
-                        Toast.makeText(RegisterActivity.this,"注册成功3！", Toast.LENGTH_LONG).show();
+                        /*Toast.makeText(RegisterActivity.this,"注册成功3！", Toast.LENGTH_LONG).show();*/
 
                     }
                     else{

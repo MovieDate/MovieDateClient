@@ -8,6 +8,7 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,6 +39,9 @@ public class XiaoxiMyFriend extends Activity{
     private User userInfo;
     private List<FriendList> friendListList;
     private MyFriendAdapter myFriendAdapter;
+    private TextView myfriend_addnewfriend;
+    private ImageView myfriend_img_back;
+
     Gson gson=new Gson();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +54,29 @@ public class XiaoxiMyFriend extends Activity{
 
     public void initView(){
         myfriendlistview=(ListView)this.findViewById(R.id.myfriendlistview);
+        myfriend_addnewfriend=(TextView)this.findViewById(R.id.myfriend_addnewfriend);
+        myfriend_img_back=(ImageView)this.findViewById(R.id.myfriend_img_back);
+
         userDataStr = SharedPrefsUtil.getValue(XiaoxiMyFriend.this, APPConfig.USERDATA,"");
         Gson gson= new Gson();
         userInfo=gson.fromJson(userDataStr,User.class);
+
+        myfriend_img_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+        myfriend_addnewfriend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent();
+                intent.setClass(XiaoxiMyFriend.this,AddActivity.class);
+                startActivity(intent);
+            }
+        });
+
         myfriendlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -111,7 +135,7 @@ public class XiaoxiMyFriend extends Activity{
     public void handleMessage(Message msg){
         String FriendListListStr=msg.obj.toString();
         Log.d("TestRun","FriendListList2=="+FriendListListStr);
-        if (FriendListListStr==null){
+        if (FriendListListStr.equals("nodata")){
             Toast.makeText(XiaoxiMyFriend.this, "暂时没有已添加的影友", Toast.LENGTH_SHORT).show();
         }else {
             try {
@@ -130,8 +154,6 @@ public class XiaoxiMyFriend extends Activity{
             }
 
         }
-
-
     }
     };
 }

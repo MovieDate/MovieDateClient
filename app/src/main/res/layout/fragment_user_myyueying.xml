@@ -9,7 +9,7 @@
         android:layout_height="35dp">
 
         <ImageView
-            android:id="@+id/fsettings_img_back"
+            android:id="@+id/fmyueying_img_back"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="2dp"
             android:src="@drawable/back01"
@@ -36,13 +36,14 @@
 
     </LinearLayout>
     <LinearLayout
-        style="@style/wrap_layout"
-        android:id="@+id/fmyyueying_ll__start">
+        style="@style/wrap_layout">
         <!-- 上圆角-->
         <LinearLayout
-            style="@style/top_layout">
-            <TextView style="@style/usertext"
-                android:text="我发起的约影（由我发起）" />
+            style="@style/top_layout"
+            android:id="@+id/fmyyueying_ll__start">
+            <TextView
+                style="@style/usertext"
+                android:text="我发起的约影（进行中）" />
             <ImageView style="@style/img_arrow"/>
         </LinearLayout>
 
@@ -54,7 +55,7 @@
             android:id="@+id/fmyyueying_ll__join">
             <TextView
                 style="@style/usertext"
-                android:text="我参与的约影（由他人发起）" />
+                android:text="我参与的约影（进行中）" />
             <ImageView style="@style/img_arrow"/>
         </LinearLayout>
         <View style="@style/bg_line"/>

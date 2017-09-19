@@ -47,8 +47,6 @@ import java.util.List;
 public class YueYingFragment extends BaseFragment{
 
 
-
-
     private ListView yueyinglistview;
     RefreshableView refreshableView;
 

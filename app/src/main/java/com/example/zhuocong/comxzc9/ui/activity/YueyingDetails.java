@@ -1,12 +1,15 @@
 package com.example.zhuocong.comxzc9.ui.activity;
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -52,6 +55,7 @@ public class YueyingDetails extends Activity {
     private String userDataStr;
     private User userInfo;
     private List<ReviewList> reviewListList;
+    private ReviewList reviewlist;
     private ReviewAdapter reviewAdapter;
 
     private ImageView details_img_back;
@@ -72,6 +76,7 @@ public class YueyingDetails extends Activity {
     private LinearLayout details_tv_check;
     private EditText details_et_review;
     private TextView details_tv_finish;
+    private ImageView details_img_share;
 
     private String postId;
     private String collecterId;
@@ -117,16 +122,45 @@ public class YueyingDetails extends Activity {
         reviewlistview=(ListView)this.findViewById(R.id.reviewlistview);
         review_details=(TextView)this.findViewById(R.id.review_details);
         details_tv_check=(LinearLayout)this.findViewById(R.id.details_tv_check);
-        et_sendDicscuss = (EditText) findViewById(R.id.et_activity_shareinfo_discusscontent);
-        tv_send = (TextView) findViewById(R.id.bt_activity_shareinfo_send);
-        tv_unsend = (TextView) findViewById(R.id.bt_activity_shareinfo_unsend);
-        ll_sendDiscuss = (LinearLayout) findViewById(R.id.ll_activity_shareinfo_senddiscuss);
+        et_sendDicscuss = (EditText) this.findViewById(R.id.et_activity_shareinfo_discusscontent);
+        tv_send = (TextView) this.findViewById(R.id.bt_activity_shareinfo_send);
+        tv_unsend = (TextView) this.findViewById(R.id.bt_activity_shareinfo_unsend);
+        ll_sendDiscuss = (LinearLayout) this.findViewById(R.id.ll_activity_shareinfo_senddiscuss);
+        details_img_share=(ImageView)this.findViewById(R.id.details_img_share);
         /*details_tv_finish=(TextView)findViewById(R.id.details_tv_finish);*/
 
         et_sendDicscuss.setVisibility(View.GONE);
         ll_sendDiscuss.setVisibility(View.GONE);
         tv_send.setVisibility(View.GONE);
         tv_unsend.setVisibility(View.GONE);
+
+        //设置分享点击事件（待完善，只能分享文字）
+        details_img_share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                /*Intent intent=new Intent(Intent.ACTION_SEND);
+                intent.setType("image");
+                intent.putExtra(Intent.EXTRA_SUBJECT, "Share");
+                intent.putExtra(Intent.EXTRA_TEXT, "I have successfully share my message through my app");
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(Intent.createChooser(intent, getTitle()));*/
+                Intent intent=new Intent(Intent.ACTION_SEND);
+                intent.setType("image/*");
+                intent.putExtra(Intent.EXTRA_SUBJECT, "Share");
+                intent.putExtra(Intent.EXTRA_TEXT, "I have successfully share my message through my app");
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(Intent.createChooser(intent, getTitle()));
+
+                Intent shareIntent=new Intent(Intent.ACTION_SEND);
+                shareIntent.setComponent(new ComponentName("com.example.zhuocong.comxzc9","com.example.zhuocong.comxzc9.ui.activity.YueyingDetails.class"));
+                //这里就是组织内容了，
+                // shareIntent.setType("text/plain");
+                shareIntent.setType("image/*");
+                shareIntent.putExtra(Intent.EXTRA_TEXT, "I have successfully share my message through my app");
+                shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(shareIntent);
+            }
+        });
 
         //设置每个评论的点击事件
         reviewlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -160,14 +194,6 @@ public class YueyingDetails extends Activity {
             }
         });
 
-        //设置按钮评论的点击事件
-        details_tv_review.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                et_sendDicscuss.setVisibility( View.VISIBLE);
-
-            }
-        });
 
         //设置查看报名情况的点击事件
         details_tv_check.setOnClickListener(new View.OnClickListener() {
@@ -211,6 +237,34 @@ public class YueyingDetails extends Activity {
                     tv_send.setVisibility(View.VISIBLE);
                     tv_unsend.setVisibility(View.VISIBLE);
                 }
+
+            }
+        });
+
+        //设置点击评论跳转页面
+        reviewlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                TextView review_name=(TextView) view.findViewById(R.id.review_name);
+                TextView review_friendid=(TextView) view.findViewById(R.id.review_friendid);
+                TextView review_tv_details=(TextView) view.findViewById(R.id.review_tv_details);
+                TextView review_tv_reviewTime=(TextView) view.findViewById(R.id.review_tv_reviewTime);
+                String name=review_name.getText().toString().trim();
+                Log.d("testRun","name="+name);
+                String id= review_friendid.getText().toString().trim();
+                Log.d("testRun","id="+id);
+                String details=review_tv_details.getText().toString().trim();
+                Log.d("testRun","details="+details);
+                String reviewTime=review_tv_reviewTime.getText().toString().trim();
+                Log.d("testRun","reviewTime="+reviewTime);
+
+                Intent intent=new Intent();
+                intent.setClass(YueyingDetails.this, YueYingDetailsReviewActivity.class);
+                intent.putExtra("name",name);
+                intent.putExtra("id",id);
+                intent.putExtra("details",details);
+                intent.putExtra("reviewTime",reviewTime);
+                startActivity(intent);
 
             }
         });
@@ -393,6 +447,8 @@ public class YueyingDetails extends Activity {
         });
 
     }
+
+
 
     private Handler handler=new Handler(){
         @Override

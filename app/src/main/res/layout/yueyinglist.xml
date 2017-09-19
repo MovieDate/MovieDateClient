@@ -22,6 +22,7 @@
         <TextView
             android:id="@+id/yueyinglist_tv_nickname"
             android:layout_width="match_parent"
+            android:singleLine="true"
             android:layout_height="20dp"
             android:editable="false"
             android:gravity="left"
@@ -29,6 +30,7 @@
         <TextView
             android:id="@+id/yueyinglist_tv_gender"
             android:layout_width="match_parent"
+            android:singleLine="true"
             android:layout_height="20dp"
             android:gravity="left"/>
 
