@@ -4,25 +4,26 @@
     android:layout_height="match_parent">
     <LinearLayout
         android:orientation="horizontal"
+        android:background="#ddd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <Button
             android:id="@+id/tv_yingxun_hotmovie"
             android:textSize="15sp"
             android:text="  近期热门  "
-            android:background="@color/white"
             android:gravity="center"
+            android:background="@null"
             android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="40dp"
-            />
+            android:layout_height="40dp" />
         <TextView
             android:layout_width="1dp"
             android:layout_height="match_parent" />
-        <TextView
+        <Button
             android:id="@+id/tv_yingxun_future"
             android:textSize="15sp"
             android:text="  即将上映  "
+            android:background="@color/gray_font"
             android:gravity="center"
             android:layout_weight="1"
             android:layout_width="0dp"
@@ -30,16 +31,16 @@
         <TextView
             android:layout_width="1dp"
             android:layout_height="match_parent" />
-        <TextView
+        <Button
             android:id="@+id/tv_yingxun_movietime"
             android:textSize="15sp"
             android:text="  影院排期  "
+            android:background="@color/gray_font"
             android:gravity="center"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="40dp" />
     </LinearLayout>
-    <View style="@style/bg_line"/>
 
     <ListView
         android:dividerHeight="3dp"
@@ -47,7 +48,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/movielistview"/>
-
 
 
 

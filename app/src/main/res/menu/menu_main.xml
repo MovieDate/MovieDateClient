@@ -21,10 +21,16 @@
         android:orderInCategory="100"
         android:title="和15089828319聊天" />
 
-    <item
+    <!--<item
         android:id="@+id/action_CHAT2"
         android:orderInCategory="100"
         android:title="和12345678聊天" />
+
+    <item
+        android:id="@+id/action_test"
+        android:orderInCategory="100"
+        android:title="test"
+        />-->
 
 
 

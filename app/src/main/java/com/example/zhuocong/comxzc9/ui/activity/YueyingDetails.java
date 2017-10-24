@@ -77,7 +77,10 @@ public class YueyingDetails extends Activity {
     private EditText details_et_review;
     private TextView details_tv_finish;
     private ImageView details_img_share;
+    private TextView review_tv_delete;
 
+    private String reviewid;
+    private Review reviewInfo;
     private String postId;
     private String collecterId;
     private String collectTime;
@@ -86,8 +89,13 @@ public class YueyingDetails extends Activity {
 
     private EditText et_sendDicscuss;
     private TextView tv_send;
+    private TextView tv_send2;
     private TextView tv_unsend;
     private LinearLayout ll_sendDiscuss;
+    private long account;
+    private String id;
+    private  String sdetails;
+    private  String sreviewTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +106,9 @@ public class YueyingDetails extends Activity {
         initMotion();
         initReview();
         sendReview();
+        finishmovie();
+
+        sendtoReview();
     }
 
     public void initView(){
@@ -124,10 +135,12 @@ public class YueyingDetails extends Activity {
         details_tv_check=(LinearLayout)this.findViewById(R.id.details_tv_check);
         et_sendDicscuss = (EditText) this.findViewById(R.id.et_activity_shareinfo_discusscontent);
         tv_send = (TextView) this.findViewById(R.id.bt_activity_shareinfo_send);
+        tv_send2 = (TextView) this.findViewById(R.id.bt_activity_shareinfo_send2);
         tv_unsend = (TextView) this.findViewById(R.id.bt_activity_shareinfo_unsend);
         ll_sendDiscuss = (LinearLayout) this.findViewById(R.id.ll_activity_shareinfo_senddiscuss);
         details_img_share=(ImageView)this.findViewById(R.id.details_img_share);
-        /*details_tv_finish=(TextView)findViewById(R.id.details_tv_finish);*/
+        details_tv_finish=(TextView)findViewById(R.id.details_tv_finish);
+
 
         et_sendDicscuss.setVisibility(View.GONE);
         ll_sendDiscuss.setVisibility(View.GONE);
@@ -162,11 +175,15 @@ public class YueyingDetails extends Activity {
             }
         });
 
-        //设置每个评论的点击事件
-        reviewlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        //评论按键的点击事件
+        details_tv_review.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
+            public void onClick(View view) {
+                et_sendDicscuss.setVisibility(View.VISIBLE);
+                ll_sendDiscuss.setVisibility(View.VISIBLE);
+                tv_send.setVisibility(View.VISIBLE);
+                tv_unsend.setVisibility(View.VISIBLE);
+                tv_send2.setVisibility(View.GONE);
             }
         });
 
@@ -234,43 +251,48 @@ public class YueyingDetails extends Activity {
                     //被点击的时候。显示这些控件
                     et_sendDicscuss.setVisibility(View.VISIBLE);
                     ll_sendDiscuss.setVisibility(View.VISIBLE);
-                    tv_send.setVisibility(View.VISIBLE);
+                    tv_send.setVisibility(View.GONE);
+                    tv_send2.setVisibility(View.VISIBLE);
                     tv_unsend.setVisibility(View.VISIBLE);
                 }
 
             }
         });
 
+
         //设置点击评论跳转页面
         reviewlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                TextView review_name=(TextView) view.findViewById(R.id.review_name);
+                /*TextView review_name=(TextView) view.findViewById(R.id.review_name);*/
                 TextView review_friendid=(TextView) view.findViewById(R.id.review_friendid);
                 TextView review_tv_details=(TextView) view.findViewById(R.id.review_tv_details);
                 TextView review_tv_reviewTime=(TextView) view.findViewById(R.id.review_tv_reviewTime);
-                String name=review_name.getText().toString().trim();
-                Log.d("testRun","name="+name);
-                String id= review_friendid.getText().toString().trim();
+                /*String name=review_name.getText().toString().trim();
+                Log.d("testRun","name="+name);*/
+                id= review_friendid.getText().toString().trim();
                 Log.d("testRun","id="+id);
-                String details=review_tv_details.getText().toString().trim();
-                Log.d("testRun","details="+details);
-                String reviewTime=review_tv_reviewTime.getText().toString().trim();
-                Log.d("testRun","reviewTime="+reviewTime);
+                sdetails=review_tv_details.getText().toString().trim();
+                Log.d("testRun","details="+sdetails);
+                sreviewTime=review_tv_reviewTime.getText().toString().trim();
+                Log.d("testRun","reviewTime="+sreviewTime);
 
-                Intent intent=new Intent();
-                intent.setClass(YueyingDetails.this, YueYingDetailsReviewActivity.class);
-                intent.putExtra("name",name);
-                intent.putExtra("id",id);
-                intent.putExtra("details",details);
-                intent.putExtra("reviewTime",reviewTime);
-                startActivity(intent);
+
+
+
+                et_sendDicscuss.setVisibility(View.VISIBLE);
+                ll_sendDiscuss.setVisibility(View.VISIBLE);
+                tv_send.setVisibility(View.GONE);
+                tv_unsend.setVisibility(View.VISIBLE);
+                tv_send2.setVisibility(View.VISIBLE);
+                account=l+1;
 
             }
         });
 
     }
 
+    //加载帖子内容
     private void initData(){
         /*id= String.valueOf(postInfo.getId());*/
         postId=this.getIntent().getStringExtra("postId");
@@ -310,6 +332,46 @@ public class YueyingDetails extends Activity {
             }
         }).start();
     }
+
+    //完成约影功能
+    public void finishmovie(){
+        postId=this.getIntent().getStringExtra("postId");
+        details_tv_finish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //访问需要的参数
+                final List<OkHttpUtils.Param> list=new ArrayList<OkHttpUtils.Param>();
+                OkHttpUtils.Param postIdParam = new OkHttpUtils.Param("id", postId);
+                list.add(postIdParam);
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //post
+                        OkHttpUtils.post(APPConfig.updatePostEndTimeById, new OkHttpUtils.ResultCallback() {
+                            @Override
+                            public void onSuccess(Object response) {
+                              String updresult=response.toString();
+                                if (updresult.equals("update_success")){
+                                    Toast.makeText(YueyingDetails.this,"您的这次约影已完成，欢迎您继续发起新的约影",Toast.LENGTH_SHORT).show();
+                                    details_tv_finish.setVisibility(View.GONE);
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Exception e) {
+                                Log.d("testRun", "服务器连接失败，请重试！{------");
+                                Toast.makeText(YueyingDetails.this, "服务器连接失败，请重试！", Toast.LENGTH_SHORT).show();
+                            }
+                        },list);
+                    }
+                }).start();
+
+
+            }
+        });
+    }
+
 
     //收藏功能
     public void initMotion(){
@@ -364,7 +426,7 @@ public class YueyingDetails extends Activity {
     }
 
     //查看该帖子的所有评论
-    public void initReview(){
+    public  void initReview(){
         Log.d("testRun","后台postId2="+postId);
         final List<OkHttpUtils.Param> list=new ArrayList<OkHttpUtils.Param>();
         OkHttpUtils.Param postParam=new OkHttpUtils.Param("postId",postId);
@@ -448,6 +510,52 @@ public class YueyingDetails extends Activity {
 
     }
 
+    //发表评论功能
+    public void sendtoReview(){
+        tv_send2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String postPersonId= String.valueOf(userInfo.getId());
+                String reviewDetails= "回复"+account+"楼"+"\n"+et_sendDicscuss.getText().toString().trim();
+
+                final List<OkHttpUtils.Param> list=new ArrayList<OkHttpUtils.Param>();
+                OkHttpUtils.Param postIdParam =new OkHttpUtils.Param("postId",postId);
+                OkHttpUtils.Param postPersonIdParam =new OkHttpUtils.Param("postPersonId",postPersonId);
+                OkHttpUtils.Param reviewDetailsParam=new OkHttpUtils.Param("reviewDetails",reviewDetails);
+                list.add(postIdParam);
+                list.add(postPersonIdParam);
+                list.add(reviewDetailsParam);
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //POST
+                        OkHttpUtils.post(APPConfig.reviewDetailsParam, new OkHttpUtils.ResultCallback() {
+                            @Override
+                            public void onSuccess(Object response) {
+                                String ToReview=response.toString();
+                                if (ToReview.equals("add_success")){
+                                    Toast.makeText(YueyingDetails.this,"评论成功！",Toast.LENGTH_SHORT).show();
+                                    et_sendDicscuss.setVisibility(View.GONE);
+                                    ll_sendDiscuss.setVisibility(View.GONE);
+                                    tv_send.setVisibility(View.GONE);
+                                    tv_unsend.setVisibility(View.GONE);
+                                    initReview();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Exception e) {
+                                Log.d("testRun", "请求失败loginActivity----new Thread(new Runnable() {------");
+                                Toast.makeText(YueyingDetails.this, "服务器连接失败，请重试！", Toast.LENGTH_SHORT).show();
+                            }
+                        },list);
+                    }
+                }).start();
+
+            }
+        });
+    }
 
 
     private Handler handler=new Handler(){
@@ -524,6 +632,13 @@ public class YueyingDetails extends Activity {
                         //查看用户姓名结束
 
 
+                        //完成约影按钮
+                        if(postInfo2.getEndTime()==null&&postInfo2.getPostPersonId()==userInfo.getId()){
+                            details_tv_finish.setVisibility(View.VISIBLE);
+                        }else {
+                            details_tv_finish.setVisibility(View.GONE);
+
+                        }
 
                         //设置查看报名状态按钮状态
                         if (postInfo2.getMovieType()==0&&((userInfo.getId())!=(postInfo2.getPostPersonId()))){
@@ -607,7 +722,10 @@ public class YueyingDetails extends Activity {
                             reviewListList=gson1.fromJson(reviewDataStr,new TypeToken<List<ReviewList>>() {}.getType());
                             if (reviewListList!=null&&reviewListList.size()>0){
                                 Log.d("reviewListList", "reviewListList333=" + reviewListList);
-                                reviewAdapter=new ReviewAdapter(reviewListList,YueyingDetails.this);
+                                Intent intent=new Intent();
+                                intent.putExtra("userId",userInfo.getId());
+                                Log.d("testRun","userId==="+userInfo.getId());
+                                reviewAdapter=new ReviewAdapter(reviewListList,YueyingDetails.this,String.valueOf(userInfo.getId()),String.valueOf(postId));
                                 reviewlistview.setAdapter(reviewAdapter);
                                 setListViewHeight(reviewlistview);/* android:focusableInTouchMode="true" 设置该属性即可使跳转页面置顶显示*/
 

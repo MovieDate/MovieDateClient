@@ -51,14 +51,17 @@
         android:layout_height="40dp"
         android:layout_width="match_parent"
         >
+
         <TextView
+            android:id="@+id/textView2"
             android:layout_width="0dp"
-            android:layout_weight="3"
             android:layout_height="40dp"
-            android:textColor="@color/black"
-            android:textSize="20dp"
+            android:layout_marginLeft="0dp"
+            android:layout_weight="3"
             android:text="影片名字："
-            android:layout_marginLeft="0dp"/>
+            android:textColor="@color/black"
+            android:textSize="20dp" />
+
         <EditText
             android:layout_width="0dp"
             android:layout_weight="5"
@@ -71,19 +74,28 @@
 
 
         <LinearLayout
+            android:layout_weight="3"
             android:layout_marginTop="0dp"
             android:layout_height="40dp"
             android:layout_width="match_parent"
+            android:orientation="horizontal"
            >
+            <LinearLayout
+                android:layout_weight="0"
+                android:layout_marginTop="0dp"
+                android:layout_height="40dp"
+                android:layout_width="wrap_content"
+                android:orientation="horizontal"
+                >
             <TextView
-                android:layout_width="0dp"
-                android:layout_weight="3"
+                android:layout_width="134dp"
                 android:layout_height="40dp"
                 android:textColor="@color/black"
                 android:textSize="20dp"
                 android:text="约影地点："
                 android:layout_marginLeft="0dp"/>
-            <EditText
+            </LinearLayout>
+            <!--<EditText
                 android:layout_width="0dp"
                 android:layout_weight="5"
                 android:layout_height="40dp"
@@ -91,7 +103,26 @@
                 android:id="@+id/starpost_et_site"
                 android:singleLine="true"
                 android:hint="输入您要约影的地点及影院"
-                android:layout_marginRight="10dp"/>
+                android:layout_marginRight="10dp"/>-->
+            <LinearLayout
+                android:layout_weight="5"
+                android:layout_marginTop="0dp"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:orientation="horizontal"
+                >
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinner"
+                />
+                <Spinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/spinner2"
+                    />
+            </LinearLayout>
+
         </LinearLayout>
 
             <LinearLayout
@@ -100,22 +131,20 @@
                 android:layout_width="match_parent"
                 >
                 <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="3"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
                     android:layout_height="40dp"
                     android:textColor="@color/black"
                     android:textSize="20dp"
                     android:text="约影时间："
                     android:layout_marginLeft="0dp"/>
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="5"
-                    android:layout_height="40dp"
-                    android:background="@drawable/edittext_back"
+                <Button
                     android:id="@+id/starpost_et_movietime"
-                    android:hint="请输入具体场次时间"
-                    android:singleLine="true"
-                    android:layout_marginRight="10dp"/>
+                    android:layout_weight="3"
+                    android:layout_marginRight="30sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="请选择"/>
             </LinearLayout>
 
             <LinearLayout
@@ -216,14 +245,15 @@
             android:layout_height="400dp"
             android:layout_width="match_parent"
             >
+
             <EditText
 
+                android:id="@+id/starpost_rb_details"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
+                android:layout_marginRight="10dp"
                 android:background="@drawable/edittext_back"
-                android:id="@+id/starpost_rb_details"
-                android:hint="一个人看电影，略孤单，两个人看电影，bigger than bigger,多人看电影，feel so happy！"
-                android:layout_marginRight="10dp"/>
+                android:hint="一个人看电影，略孤单，两个人看电影，bigger than bigger,多人看电影，feel so happy！" />
         </LinearLayout>
 
 

@@ -6,10 +6,9 @@ package com.example.zhuocong.comxzc9.commom;
 public class APPConfig {
 
 //  private static String base_url="http://localhost:8080/";
-   /* private static String base_url="http://192.168.1.101:8080/";*/
+    private static String base_url="http://192.168.1.101:8080/";
    /*private static String base_url="http://27.45.53.166:80/";*/
-
-    private static String base_url="http://192.168.43.195:8080/";
+    /*private static String base_url="http://192.168.43.195:8080/";*/
 
     public static String login = base_url + "/userController/loginByPhonePsw";
     public static String findUserByPhone = base_url + "/userController/findUserByPhone";
@@ -37,6 +36,11 @@ public class APPConfig {
     public static String findPostBypostPersonId=base_url+"/postController/findPostBypostPersonId";
     public static String findPostByjoin=base_url+"/postController/findPostByjoin";
     public static String findPostByhistory=base_url+"/postController/findPostByhistory";
+    public static String findReviewidByReviewall=base_url+"/reviewController/findReviewidByReviewall";
+    public static String addToReviewByreviewId=base_url+"/reviewtoreviewController/addToReviewByreviewId";
+    public static String findToReviewByReviewId=base_url+"/reviewtoreviewController/findToReviewByReviewId";
+    public static String updatePostEndTimeById=base_url+"/postController/updatePostEndTimeById";
+    public static String deleteReviewByReviewDetails=base_url+"/reviewController/deleteReviewByReviewDetails";
 
 
 

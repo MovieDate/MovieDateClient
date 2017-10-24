@@ -8,9 +8,13 @@ import android.os.Message;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,7 +46,7 @@ public class StarPostActivity extends FragmentActivity implements View.OnClickLi
     private TextView starpost_tv_post;
     private EditText starpost_et_moviename;
     private EditText starpost_et_site;
-    private TextView starpost_et_movietime;
+    private Button starpost_et_movietime;
     private RadioButton starpost_rb_gender0;
     private RadioButton starpost_rb_gender1;
     private RadioButton starpost_rb_gender2;
@@ -62,6 +66,16 @@ public class StarPostActivity extends FragmentActivity implements View.OnClickLi
     private String movieType;
     private String details;
 
+    private Spinner spinner;
+    private List<String> data_list;
+    private ArrayAdapter<String> arr_adapter;
+    private Spinner spinner2;
+    private List<String> data_list2;
+    private ArrayAdapter<String> arr_adapter2;
+
+    private String site1;
+    private String site2;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,6 +85,26 @@ public class StarPostActivity extends FragmentActivity implements View.OnClickLi
         dateTimeDialog = new DateTimeDialogUtils(this, null, this);
         init();
         initMotion();
+
+        //数据
+        data_list = new ArrayList<String>();
+        data_list.add("江门");
+
+        data_list2 = new ArrayList<String>();
+        data_list2.add("蓬江区");
+        data_list2.add("外海区");
+        data_list2.add("新会");
+        data_list2.add("台山");
+
+        //适配器
+        arr_adapter= new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, data_list);
+        arr_adapter2= new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, data_list2);
+        //设置样式
+        arr_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        arr_adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //加载适配器
+        spinner.setAdapter(arr_adapter);
+        spinner2.setAdapter(arr_adapter2);
 
 
     }
@@ -84,21 +118,20 @@ public class StarPostActivity extends FragmentActivity implements View.OnClickLi
         starpost_img_back=(ImageView)findViewById(R.id.starpost_img_back);
         starpost_tv_post=(TextView)findViewById(R.id.starpost_tv_post);
         starpost_et_moviename=(EditText)findViewById(R.id.starpost_et_moviename);
-        starpost_et_site=(EditText)findViewById(R.id.starpost_et_site);
-        starpost_et_movietime=(TextView)findViewById(R.id.starpost_et_movietime);
+        /*starpost_et_site=(EditText)findViewById(R.id.starpost_et_site);*/
+        starpost_et_movietime=(Button) findViewById(R.id.starpost_et_movietime);
         starpost_rb_gender0=(RadioButton)findViewById(R.id.starpost_rb_gender0);
         starpost_rb_gender1=(RadioButton)findViewById(R.id.starpost_rb_gender1);
         starpost_rb_gender2=(RadioButton)findViewById(R.id.starpost_rb_gender2);
         starpost_rb_movietype0=(RadioButton)findViewById(R.id.starpost_rb_movietype0);
         starpost_rb_movietype1=(RadioButton)findViewById(R.id.starpost_rb_movietype1);
         starpost_rb_details=(EditText)findViewById(R.id.starpost_rb_details);
+        spinner=(Spinner)findViewById(R.id.spinner);
+        spinner2=(Spinner)findViewById(R.id.spinner2);
 
         starpost_img_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               /* Intent intent = new Intent();
-                intent.setClass(StarPostActivity.this,MainActivity.class );
-                startActivity(intent);*/
                 finish();
             }
         });
@@ -108,6 +141,35 @@ public class StarPostActivity extends FragmentActivity implements View.OnClickLi
                 showAll();
             }
         });
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                site1=(String)spinner.getSelectedItem();
+                Toast.makeText(StarPostActivity.this,"item="+site1,Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                site2=(String)spinner2.getSelectedItem();
+                Toast.makeText(StarPostActivity.this,"item2="+site2,Toast.LENGTH_SHORT).show();
+                site=site1+site2;
+                Toast.makeText(StarPostActivity.this,"site="+site,Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+
 
     }
 
@@ -119,7 +181,8 @@ public class StarPostActivity extends FragmentActivity implements View.OnClickLi
                 postPersonId= String.valueOf(userInfo.getId());
                 Log.d("test","id"+postPersonId);
                 movieName=starpost_et_moviename.getText().toString().trim();
-                site=starpost_et_site.getText().toString().trim();
+                site=site1+"市"+site2;
+                Log.d("test","site="+site);
                 /*movieTime=starpost_et_movietime.getText().toString().trim();*/
                 if (starpost_rb_gender0.isChecked()){
                     sex="0";

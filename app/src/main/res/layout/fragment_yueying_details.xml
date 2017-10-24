@@ -309,7 +309,22 @@
 
                 </LinearLayout>
 
-
+                <TextView
+                    android:visibility="gone"
+                    android:id="@+id/details_tv_finish"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="60dp"
+                    android:layout_marginRight="60dp"
+                    android:layout_weight="1"
+                    android:background="@color/btn_logout_pressed"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="完        成        约        影"
+                    android:textColor="#ffffff"
+                    android:textSize="15sp" />
                 <View
                     style="@style/bg_line"
                     android:layout_marginTop="15dp"
@@ -346,7 +361,7 @@
                 android:layout_marginLeft="35dp"
                 android:layout_marginRight="35dp"
                 android:layout_weight="1"
-                android:background="@color/limegreen"
+                android:background="@color/mediumseagreen"
                 android:gravity="center"
                 android:padding="7dp"
                 android:text="取消"
@@ -357,12 +372,27 @@
                 android:layout_weight="1"
                 android:layout_marginLeft="35dp"
                 android:layout_marginRight="35dp"
+                android:visibility="gone"
+                android:id="@+id/bt_activity_shareinfo_send2"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:background="@color/mediumseagreen"
+                android:textSize="15sp"
+                android:padding="7dp"
+                android:text="发表"
+                android:textColor="#ffffff"/>
+            <TextView
+                android:layout_weight="1"
+                android:layout_marginLeft="35dp"
+                android:layout_marginRight="35dp"
                 android:id="@+id/bt_activity_shareinfo_send"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center"
-                android:background="@color/limegreen"
+                android:background="@color/mediumseagreen"
                 android:textSize="15sp"
                 android:padding="7dp"
                 android:text="发表"

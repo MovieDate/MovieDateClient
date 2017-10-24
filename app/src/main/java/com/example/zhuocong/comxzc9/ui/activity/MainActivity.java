@@ -255,16 +255,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.action_CHAT:
                 Intent intent3 = new Intent();
-                intent3.setClass(MainActivity.this,ChatActivity.class);
-                intent3.putExtra(Constant.CHAT_TO_NAME,"15089828319");
+                intent3.setClass(MainActivity.this,MovieTest.class);
                 startActivity(intent3);
                 break;
-            case R.id.action_CHAT2:
+            /*case R.id.action_CHAT2:
                 Intent intent4 = new Intent();
                 intent4.setClass(MainActivity.this,ChatActivity.class);
                 intent4.putExtra(Constant.CHAT_TO_NAME,"12345678");
                 startActivity(intent4);
                 break;
+            case R.id.action_test:
+                Intent intent5 = new Intent();
+                intent5.setClass(MainActivity.this,MovieTest.class);
+                startActivity(intent5);
+                break;*/
         }
         return true;
     }

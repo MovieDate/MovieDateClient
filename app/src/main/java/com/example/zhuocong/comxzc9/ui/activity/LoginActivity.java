@@ -75,7 +75,10 @@ public class LoginActivity extends AppCompatActivity {
         tv_login_find.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                signUp();
+                //跳转页面
+                Intent intent = new Intent();
+                intent.setClass(LoginActivity.this,MainActivity.class);
+                startActivity(intent);
             }
         });
 

@@ -28,6 +28,9 @@
         <item name="android:src">@drawable/yue</item>
     </style>
 
+    <style name="DELECTTHEME" parent="Theme.AppCompat.Light.NoActionBar">
+    </style>
+
     <style name="AppTheme.NoActionBar">
 
     </style>
